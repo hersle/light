@@ -17,7 +17,7 @@
 <div class="announcement">
 Fysikkland legger vekt på åpenhet i data.
 Derfor er maskineriet bak lysloggen nå tilgjengelig på <a href="https://github.com/hersle/light">GitHub</a>.
-Alle brukere oppfordres til å melde inn feil og sende inn forslag til forbedringer her!
+Alle brukere oppfordres til å melde inn feil, sende inn forbedringsforslag og lete etter sikkerhetshull!
 </div>
 
 <div class="announcement">
