@@ -2,7 +2,7 @@ var offset = 0;
 
 function sendSubscription () {
 	var req = new XMLHttpRequest();
-	req.open("POST", "subscription.php");
+	req.open("POST", "subscribe.php");
 	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	req.addEventListener("load", function() {
 		console.log(req.readyState, req.status, "\"", req.response, "\"");
