@@ -4,6 +4,7 @@
 
 <style>
 	body {
+		font-family: sans-serif;
 		max-width: 600px;
 		margin: 0px auto;
 		padding: 10px;
@@ -34,6 +35,15 @@
 	h1, h2 {
 		text-align: center;
 	}
+	.announcement {
+		background-color: #0080ff; 
+		color: white; 
+		padding: 1.0em;
+	}
+	.announcement a {
+		color: white;
+		text-decoration: underline;
+	}
 </style>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,6 +52,13 @@
 <body>
 
 <h1>Lyset på Fysikkland</h1>
+
+<div class="announcement">
+<strong>
+Fysikkland legger vekt på åpenhet i data.
+Derfor er maskineriet bak lysloggen nå tilgjengelig på <a href="https://github.com/hersle/light">GitHub</a>.
+</strong>
+</div>
 
 <h2>Abonner</h2>
 <p><strong>Nyhet: </strong>registrér deg her og motta varsler hver gang lyset på Fysikkland måles!</p>
