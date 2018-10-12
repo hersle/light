@@ -1,8 +1,9 @@
-const registrationHalfInterval = 60000;
+const registrationHalfInterval = 30;
 const timerUpdateInterval = 101;
 
 var offset = 0;
 var prediction;
+var registered = false;
 
 function timeString(date) {
 	let h = String(date.getHours()).padStart(2, "0");
@@ -26,6 +27,36 @@ function updateTimer() {
 	document.getElementById("stime").innerHTML = timeString(stime);
 	document.getElementById("sdate").innerHTML = dateString(stime);
 
+	let text = "";
+	let color = "";
+	let secs = Math.floor((stime - prediction) / 1000);
+	if (registered) {
+		text = "Slukking registrert";
+		color = "grey";
+	} else if (secs < -registrationHalfInterval) {
+		secs = -(secs + registrationHalfInterval);
+		text = "Registrering åpner om ";
+		if (secs <= 60) {
+			text += secs + " sekunder";
+		} else if (secs <= 60 * 60) {
+			let min = Math.floor(secs / 60);
+			text += min + " minutter";
+		} else {
+			let hours = Math.floor(secs / (60 * 60));
+			text += hours + " timer";
+		}
+		color = "grey";
+	} else if (secs > +registrationHalfInterval) {
+		text = "Slukking stengt";
+		color = "grey";
+	} else {
+		text = "Registrér slukking";
+		color = "green";
+	}
+	document.getElementById("updatebutton").innerHTML = text;
+	document.getElementById("updatebutton").style.backgroundColor = color;
+
+	/*
 	if (document.getElementById("updatebutton").style.backgroundColor == "grey") {
 	} else if (Math.abs(stime - prediction) <= registrationHalfInterval) {
 		document.getElementById("updatebutton").style.backgroundColor = "green";
@@ -33,6 +64,7 @@ function updateTimer() {
 		document.getElementById("updatebutton").style.backgroundColor = "red";
 		document.getElementById("updatebutton").innerHTML = "Lysregistrering åpner om " + Math.floor(((prediction - registrationHalfInterval) - stime) / 1000) + " sekunder";
 	}
+	*/
 }
 
 function updateServerTime() {
@@ -57,6 +89,18 @@ function updatePrediction() {
 	req.send();
 }
 
+function updateStatus() {
+	let req = new XMLHttpRequest();
+	req.open("GET", "status.php");
+	req.addEventListener("load", function() {
+		if (req.response === "yes") {
+			registered = false;
+		} else {
+			registered = true;
+		}
+	});
+	req.send();
+}
 
 function register() {
 	var req = new XMLHttpRequest();
@@ -90,6 +134,7 @@ function subscribe() {
 window.addEventListener("load", function() {
 	updatePrediction();
 	updateServerTime();
+	updateStatus();
 	setInterval(updateTimer, timerUpdateInterval);
 
 	document.getElementById("subscribebutton").addEventListener("click", subscribe);

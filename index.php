@@ -45,14 +45,7 @@ Alle brukere oppfordres til å melde inn feil og sende inn forslag til forbedrin
 </table>
 
 <form>
-<?php
-$ans = shell_exec("python3 light.py open");
-if ($ans === "yes\n") {
-	echo '<button id="updatebutton" type="button">Registrér lysslukking</button>';
-} else {
-	echo '<button id="updatebutton" style="background: grey;" disabled>Slukking allerede registrert</button>';
-}
-?>
+<button id="updatebutton" type="button"></button>
 </form>
 
 
