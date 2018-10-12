@@ -45,43 +45,43 @@ function updateTimer() {
 }
 
 function pollServerTime() {
-	var reqq = new XMLHttpRequest();
-	reqq.open("GET", "time.php");
-	reqq.addEventListener("load", function() {
-		let secondsUTC = reqq.response;
+	var req = new XMLHttpRequest();
+	req.open("GET", "time.php");
+	req.addEventListener("load", function() {
+		let secondsUTC = req.response;
 		stime = new Date(parseInt(secondsUTC));
 		ctime = new Date();
 		offset = stime.getTime() - ctime.getTime();
 	});
-	reqq.send();
+	req.send();
 }
 
 function getPrediction() {
-	var reqq = new XMLHttpRequest();
-	reqq.open("GET", "prediction.php");
-	reqq.addEventListener("load", function() {
-		let secondsUTC = reqq.response;
+	var req = new XMLHttpRequest();
+	req.open("GET", "prediction.php");
+	req.addEventListener("load", function() {
+		let secondsUTC = req.response;
 		prediction = new Date(parseInt(secondsUTC));
 		console.log("pred:", prediction);
 		document.getElementById("prediction").innerHTML = timeString(prediction, true);
 	});
-	reqq.send();
+	req.send();
 }
 
 
 function updateServer () {
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "post.php");
-	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xhr.addEventListener("load", function() {
-		if (xhr.readyState == 4 && xhr.response === "Registrert.") {
+	var req = new XMLHttpRequest();
+	req.open("POST", "post.php");
+	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	req.addEventListener("load", function() {
+		if (req.readyState == 4 && req.response === "Registrert.") {
 			location.reload();
 		} else {
-			console.log(xhr.readyState, xhr.status, "\"", xhr.response, "\"");
-			document.getElementById("errormessage").innerHTML = xhr.response;
+			console.log(req.readyState, req.status, "\"", req.response, "\"");
+			document.getElementById("errormessage").innerHTML = req.response;
 		}
 	});
-	xhr.send();
+	req.send();
 }
 
 window.addEventListener("load", function() {
