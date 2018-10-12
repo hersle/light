@@ -2,7 +2,7 @@ var offset = 0;
 
 var req = new XMLHttpRequest();
 function sendSubscription () {
-	req.open("POST", "subscription.php", false);
+	req.open("POST", "subscription.php");
 	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	req.onreadystatechange = function() {
 		console.log(req.readyState, req.status, "\"", req.response, "\"");
@@ -46,7 +46,7 @@ function updateTimer() {
 
 function pollServerTime() {
 	var reqq = new XMLHttpRequest();
-	reqq.open("GET", "time.php", false);
+	reqq.open("GET", "time.php");
 	reqq.onreadystatechange = function() {
 		let secondsUTC = reqq.response;
 		stime = new Date(parseInt(secondsUTC));
@@ -58,7 +58,7 @@ function pollServerTime() {
 
 function getPrediction() {
 	var reqq = new XMLHttpRequest();
-	reqq.open("GET", "prediction.php", false);
+	reqq.open("GET", "prediction.php");
 	reqq.onreadystatechange = function() {
 		let secondsUTC = reqq.response;
 		prediction = new Date(parseInt(secondsUTC));
@@ -71,7 +71,7 @@ function getPrediction() {
 
 var xhr = new XMLHttpRequest();
 function updateServer () {
-	xhr.open("POST", "post.php", false);
+	xhr.open("POST", "post.php");
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.response === "Registrert.") {
