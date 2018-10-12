@@ -1,3 +1,5 @@
+var offset = 0;
+
 var req = new XMLHttpRequest();
 function sendSubscription () {
 	req.open("POST", "subscription.php", false);
@@ -7,10 +9,6 @@ function sendSubscription () {
 	};
 	let str = document.getElementById("emailinput").value;
 	req.send(encodeURI("email=" + "\"" + str + "\""));
-}
-
-function updatePrediction() {
-	document.getElementById("prediction").innerHTML = timeString(prediction, true);
 }
 
 function timeString(dt, incl_ms) {
@@ -45,7 +43,31 @@ function updateTimer() {
 		document.getElementById("updatebutton").innerHTML = "Lysregistrering åpner om " + Math.floor(((prediction - 30000) - stime) / 1000) + " sekunder";
 	}
 }
-setInterval(updateTimer, 101);
+
+function pollServerTime() {
+	var reqq = new XMLHttpRequest();
+	reqq.open("GET", "time.php", false);
+	reqq.onreadystatechange = function() {
+		let secondsUTC = reqq.response;
+		stime = new Date(parseInt(secondsUTC));
+		ctime = new Date();
+		offset = stime.getTime() - ctime.getTime();
+	};
+	reqq.send();
+}
+
+function getPrediction() {
+	var reqq = new XMLHttpRequest();
+	reqq.open("GET", "prediction.php", false);
+	reqq.onreadystatechange = function() {
+		let secondsUTC = reqq.response;
+		prediction = new Date(parseInt(secondsUTC));
+		console.log("pred:", prediction);
+		document.getElementById("prediction").innerHTML = timeString(prediction, true);
+	};
+	reqq.send();
+}
+
 
 var xhr = new XMLHttpRequest();
 function updateServer () {
@@ -61,3 +83,11 @@ function updateServer () {
 	};
 	xhr.send();
 }
+
+window.addEventListener("load", function() {
+	getPrediction();
+
+	setInterval(updateTimer, 101);
+
+	pollServerTime();
+});

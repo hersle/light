@@ -7,14 +7,8 @@
 
 <link href="style.css" rel="stylesheet">
 <script type="text/javascript" src="javascript.js"></script>
-<script type="text/javascript">
-	var stime = new Date(<?php echo microtime(true) * 1000 ?>);
-	var prediction = new Date(<?php echo shell_exec("python3 light.py 2>&1") ?>);
-	var ctime = new Date();
-	var offset = stime.getTime() - ctime.getTime();
-</script>
 
-<body onload="updatePrediction()">
+<body>
 
 <h1>Lyset på Fysikkland</h1>
 
@@ -44,12 +38,7 @@ Alle brukere oppfordres til å melde inn feil og sende inn forslag til forbedrin
 	</tr>
 	<tr>
 		<th>Estimert slukketid</th>
-		<td id="prediction">
-			<?php
-			$output = shell_exec("python3 light.py 2>&1");
-			echo "$output";
-			?>
-		</td>
+		<td id="prediction"></td>
 	</tr>
 </table>
 
