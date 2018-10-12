@@ -1,75 +1,64 @@
+const registrationHalfInterval = 60000;
+const timerUpdateInterval = 101;
+
 var offset = 0;
+var prediction;
 
-function sendSubscription () {
-	var req = new XMLHttpRequest();
-	req.open("POST", "subscribe.php");
-	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	req.addEventListener("load", function() {
-		console.log(req.readyState, req.status, "\"", req.response, "\"");
-	});
-	let str = document.getElementById("emailinput").value;
-	req.send(encodeURI("email=" + "\"" + str + "\""));
+function timeString(date) {
+	let h = String(date.getHours()).padStart(2, "0");
+	let m = String(date.getMinutes()).padStart(2, "0");
+	let s = String(date.getSeconds()).padStart(2, "0");
+	let ms = String(date.getMilliseconds()).padStart(3, "0");
+	return h + ":" + m + ":" + s + "." + ms;
 }
 
-function timeString(dt, incl_ms) {
-	let h = String(dt.getHours()).padStart(2, "0");
-	let m = String(dt.getMinutes()).padStart(2, "0");
-	let s = String(dt.getSeconds()).padStart(2, "0");
-	let str = h + ":" + m + ":" + s;
-	if (incl_ms) {
-		let ms = String(dt.getMilliseconds()).padStart(3, "0");
-		str += "." + ms;
-	}
-	return str;
-}
-function dateString(dt) {
-	let d = String(dt.getDate()).padStart(2, "0");
-	let m = String(dt.getMonth() + 1).padStart(2, "0");
-	let y = String(dt.getFullYear()).padStart(2, "0");
+function dateString(date) {
+	let d = String(date.getDate()).padStart(2, "0");
+	let m = String(date.getMonth() + 1).padStart(2, "0");
+	let y = String(date.getFullYear()).padStart(2, "0");
 	return d + "." + m + "." + y;
 }
-function updateTimer() {
-	ctime = new Date();
-	stime = new Date(ctime.getTime() + offset);
 
-	document.getElementById("stime").innerHTML = timeString(stime, true);
+function updateTimer() {
+	let ctime = new Date();
+	let stime = new Date(ctime.getTime() + offset);
+
+	document.getElementById("stime").innerHTML = timeString(stime);
 	document.getElementById("sdate").innerHTML = dateString(stime);
 
 	if (document.getElementById("updatebutton").style.backgroundColor == "grey") {
-	} else if (Math.abs(stime - prediction) <= 30000) {
+	} else if (Math.abs(stime - prediction) <= registrationHalfInterval) {
 		document.getElementById("updatebutton").style.backgroundColor = "green";
 	} else {
 		document.getElementById("updatebutton").style.backgroundColor = "red";
-		document.getElementById("updatebutton").innerHTML = "Lysregistrering åpner om " + Math.floor(((prediction - 30000) - stime) / 1000) + " sekunder";
+		document.getElementById("updatebutton").innerHTML = "Lysregistrering åpner om " + Math.floor(((prediction - registrationHalfInterval) - stime) / 1000) + " sekunder";
 	}
 }
 
-function pollServerTime() {
-	var req = new XMLHttpRequest();
+function updateServerTime() {
+	let req = new XMLHttpRequest();
 	req.open("GET", "time.php");
 	req.addEventListener("load", function() {
-		let secondsUTC = req.response;
-		stime = new Date(parseInt(secondsUTC));
-		ctime = new Date();
+		let secs = parseInt(req.response);
+		let stime = new Date(secs);
+		let ctime = new Date();
 		offset = stime.getTime() - ctime.getTime();
 	});
-	req.send();
 }
 
-function getPrediction() {
-	var req = new XMLHttpRequest();
+function updatePrediction() {
+	let req = new XMLHttpRequest();
 	req.open("GET", "prediction.php");
 	req.addEventListener("load", function() {
-		let secondsUTC = req.response;
-		prediction = new Date(parseInt(secondsUTC));
-		console.log("pred:", prediction);
-		document.getElementById("prediction").innerHTML = timeString(prediction, true);
+		let secs = parseInt(req.response);
+		prediction = new Date(secs);
+		document.getElementById("prediction").innerHTML = timeString(prediction);
 	});
 	req.send();
 }
 
 
-function updateServer () {
+function register() {
 	var req = new XMLHttpRequest();
 	req.open("POST", "post.php");
 	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -77,20 +66,29 @@ function updateServer () {
 		if (req.readyState == 4 && req.response === "Registrert.") {
 			location.reload();
 		} else {
-			console.log(req.readyState, req.status, "\"", req.response, "\"");
 			document.getElementById("errormessage").innerHTML = req.response;
 		}
 	});
 	req.send();
 }
 
+function subscribe() {
+	let req = new XMLHttpRequest();
+	let email = document.getElementById("emailinput").value;
+
+	req.open("POST", "subscribe.php");
+	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	req.addEventListener("load", function() {
+	});
+	req.send("email=" + email);
+}
+
 window.addEventListener("load", function() {
-	getPrediction();
+	updatePrediction();
+	updateServerTime();
+	setInterval(updateTimer, timerUpdateInterval);
 
-	setInterval(updateTimer, 101);
+	document.getElementById("subscribebutton").addEventListener("click", subscribe);
+	document.getElementById("updatebutton").addEventListener("click", register);
 
-	pollServerTime();
-
-	document.getElementById("subscribebutton").addEventListener("click", sendSubscription);
-	document.getElementById("updatebutton").addEventListener("click", updateServer);
 });
