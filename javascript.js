@@ -85,7 +85,6 @@ function updateServer () {
 			document.getElementById("errormessage").innerHTML = xhr.response;
 		}
 	};
-	let str = dateString(stime, 0) + " " + timeString(stime, 0);
-	xhr.send(encodeURI("time=" + "\"" + str + "\""));
+	xhr.send();
 }
 //updateServer();

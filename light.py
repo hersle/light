@@ -120,7 +120,8 @@ elif args[0] == "add":
         file.close()
         notify()
 elif args[0] == "open":
-    if registered():
+    now = datetime.datetime.now()
+    if registered(now):
         print("no")
     else:
         print("yes")
