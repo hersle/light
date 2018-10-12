@@ -58,11 +58,9 @@ def linregr(x, y):
         # return a, b, da, db
         return a, b
 
-def registered(datestr=None):
+def registered(time):
     file = open("light.dat", "r")
-    today = datetime.date.today()
-    if datestr:
-        today = datetime.datetime.strptime(datestr, "%d.%m.%y %H:%M:%S\n").date()
+    today = time.date()
     reg = False
     for line in file:
         date = datetime.datetime.strptime(line, "%d.%m.%y %H:%M:%S\n").date()
@@ -92,22 +90,11 @@ def getprediction():
     days = (time - epoch).days
     secs = a * days + b
     time = datetime.datetime.utcfromtimestamp(secs)
-    # return datetime.datetime.strptime("06.10.18 02:50:50", "%d.%m.%y %H:%M:%S")
     return time
 
-def timeisreasonable(timestr):
+def timeisreasonable(time):
     prediction = getprediction()
-    # prediction = datetime.datetime.now()
-    time = datetime.datetime.strptime(timestr, "%d.%m.%y %H:%M:%S\n")
     return abs((time - prediction).total_seconds()) <= 30
-    # return abs((time - prediction).total_seconds()) <= 1000000000
-
-def validatedatestring(str):
-    try:
-        time = datetime.datetime.strptime(str, "%d.%m.%y %H:%M:%S\n")
-        return True
-    except:
-        return False
 
 def log(str):
     file = open("log", "a")
@@ -116,21 +103,19 @@ def log(str):
     file.close()
 
 if args[0] == "" or args[0] == "predict":
-    # print(getprediction().strftime("%H:%M:%S.%f")[:-3])
     epoch = datetime.datetime.utcfromtimestamp(0)
     print(int(getprediction().timestamp() * 1000))
 elif args[0] == "add":
     # add new time
-    line = args[1] + "\n"
-    if not validatedatestring(line):
-        print("Formateringsfeil.")
-    elif not timeisreasonable(line):
+    now = datetime.datetime.now()
+    if not timeisreasonable(now):
         print("Ufysikalsk tid. For stort avvik.")
-    elif registered(line):
+    elif registered(now):
         print("Lys allerede registrert.")
     else:
         print("Registrert.")
         file = open("light.dat", "a")
+        line = now.strftime("%d.%m.%y %H:%M:%S\n")
         file.write(line)
         file.close()
         notify()
