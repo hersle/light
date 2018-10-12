@@ -15,7 +15,7 @@ table th, table td {
 	background: #ff0000; 
 	width: 100%; 
 	font-size:3.0em; 
-	# margin-top: 0.5em; 
+	margin-top: 0.5em; 
 	border: 0; 
 	color: white; 
 	padding: 0.5em;;
@@ -42,6 +42,13 @@ h1, h2 {
 }
 .announcement form {
 	margin-top: 1em;
+}
+#response {
+	color: red; 
+	padding: 1.0em;
+	margin-bottom: 10px;
+	border: 1px solid red;
+	display: none;
 }
 table {
 	margin-left: auto; 

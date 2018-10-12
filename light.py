@@ -132,6 +132,9 @@ elif args[0] == "list":
         print(line)
     file.close()
 elif args[0] == "subscribe":
+    print("Epostregistrering stengt.")
+    exit()
+
     email = args[1]
     file = open("subscribers", "a")
     line = email + "\n"

@@ -12,6 +12,8 @@
 
 <h1>Lyset på Fysikkland</h1>
 
+<div id="response"></div>
+
 <div class="announcement">
 Fysikkland legger vekt på åpenhet i data.
 Derfor er maskineriet bak lysloggen nå tilgjengelig på <a href="https://github.com/hersle/light">GitHub</a>.
@@ -41,8 +43,6 @@ Alle brukere oppfordres til å melde inn feil og sende inn forslag til forbedrin
 		<td id="prediction"></td>
 	</tr>
 </table>
-
-<p id="errormessage"></p>
 
 <form>
 <?php

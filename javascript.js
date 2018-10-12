@@ -66,7 +66,8 @@ function register() {
 		if (req.readyState == 4 && req.response === "Registrert.") {
 			location.reload();
 		} else {
-			document.getElementById("errormessage").innerHTML = req.response;
+			document.getElementById("response").innerHTML = req.response;
+			document.getElementById("response").style.display = "block";
 		}
 	});
 	req.send();
@@ -79,6 +80,9 @@ function subscribe() {
 	req.open("POST", "subscribe.php");
 	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	req.addEventListener("load", function() {
+		document.getElementById("response").innerHTML = req.response;
+		document.getElementById("response").style.display = "block";
+		document.getElementById("emailinput").value = "";
 	});
 	req.send("email=" + email);
 }
