@@ -4,9 +4,9 @@ function sendSubscription () {
 	var req = new XMLHttpRequest();
 	req.open("POST", "subscription.php");
 	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	req.onreadystatechange = function() {
+	req.addEventListener("load", function() {
 		console.log(req.readyState, req.status, "\"", req.response, "\"");
-	};
+	});
 	let str = document.getElementById("emailinput").value;
 	req.send(encodeURI("email=" + "\"" + str + "\""));
 }
@@ -47,40 +47,40 @@ function updateTimer() {
 function pollServerTime() {
 	var reqq = new XMLHttpRequest();
 	reqq.open("GET", "time.php");
-	reqq.onreadystatechange = function() {
+	reqq.addEventListener("load", function() {
 		let secondsUTC = reqq.response;
 		stime = new Date(parseInt(secondsUTC));
 		ctime = new Date();
 		offset = stime.getTime() - ctime.getTime();
-	};
+	});
 	reqq.send();
 }
 
 function getPrediction() {
 	var reqq = new XMLHttpRequest();
 	reqq.open("GET", "prediction.php");
-	reqq.onreadystatechange = function() {
+	reqq.addEventListener("load", function() {
 		let secondsUTC = reqq.response;
 		prediction = new Date(parseInt(secondsUTC));
 		console.log("pred:", prediction);
 		document.getElementById("prediction").innerHTML = timeString(prediction, true);
-	};
+	});
 	reqq.send();
 }
 
 
-var xhr = new XMLHttpRequest();
 function updateServer () {
+	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "post.php");
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xhr.onreadystatechange = function() {
+	xhr.addEventListener("load", function() {
 		if (xhr.readyState == 4 && xhr.response === "Registrert.") {
 			location.reload();
 		} else {
 			console.log(xhr.readyState, xhr.status, "\"", xhr.response, "\"");
 			document.getElementById("errormessage").innerHTML = xhr.response;
 		}
-	};
+	});
 	xhr.send();
 }
 
@@ -90,4 +90,7 @@ window.addEventListener("load", function() {
 	setInterval(updateTimer, 101);
 
 	pollServerTime();
+
+	document.getElementById("subscribebutton").addEventListener("click", sendSubscription);
+	document.getElementById("updatebutton").addEventListener("click", updateServer);
 });

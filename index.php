@@ -23,7 +23,7 @@ Alle brukere oppfordres til å melde inn feil og sende inn forslag til forbedrin
 	<form>
 	<label for="email">Epost:</label>
 	<input id="emailinput" name="email" type="text"/>
-	<button type="submit" onclick="sendSubscription()">Abonner</button>
+	<button id="subscribebutton" type="button">Abonner</button>
 	</form>
 </div>
 
@@ -48,7 +48,7 @@ Alle brukere oppfordres til å melde inn feil og sende inn forslag til forbedrin
 <?php
 $ans = shell_exec("python3 light.py open");
 if ($ans === "yes\n") {
-	echo '<button id="updatebutton" onclick="updateServer()" type="button">Registrér lysslukking</button>';
+	echo '<button id="updatebutton" type="button">Registrér lysslukking</button>';
 } else {
 	echo '<button id="updatebutton" style="background: grey;" disabled>Slukking allerede registrert</button>';
 }
