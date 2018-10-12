@@ -17,28 +17,25 @@ function timeString(dt, incl_ms) {
 	let h = String(dt.getHours()).padStart(2, "0");
 	let m = String(dt.getMinutes()).padStart(2, "0");
 	let s = String(dt.getSeconds()).padStart(2, "0");
-	let ms = String(dt.getMilliseconds()).padStart(3, "0");
+	let str = h + ":" + m + ":" + s;
 	if (incl_ms) {
-		return h + ":" + m + ":" + s + "." + ms;
-	} else {
-		return h + ":" + m + ":" + s;
+		let ms = String(dt.getMilliseconds()).padStart(3, "0");
+		str += "." + ms;
 	}
+	return str;
 }
-function dateString(dt, fully) {
+function dateString(dt) {
 	let d = String(dt.getDate()).padStart(2, "0");
 	let m = String(dt.getMonth() + 1).padStart(2, "0");
 	let y = String(dt.getFullYear()).padStart(2, "0");
-	if (!fully) {
-		y = y % 100;
-	}
 	return d + "." + m + "." + y;
 }
 function updateTimer() {
 	ctime = new Date();
 	stime = new Date(ctime.getTime() + offset);
 
-	document.getElementById("stime").innerHTML = timeString(stime, 1);
-	document.getElementById("sdate").innerHTML = dateString(stime, 1);
+	document.getElementById("stime").innerHTML = timeString(stime, true);
+	document.getElementById("sdate").innerHTML = dateString(stime);
 
 	if (document.getElementById("updatebutton").style.backgroundColor == "grey") {
 	} else if (Math.abs(stime - prediction) <= 30000) {
