@@ -2,70 +2,26 @@
 
 <html>
 
-<style>
-	body {
-		font-family: sans-serif;
-		max-width: 600px;
-		margin: 0px auto;
-		padding: 10px;
-	}
-	table {
-		border-collapse: collapse;
-	}
-	table th, table td {
-		padding: 0.3em;
-		border: 1px solid black;
-	}
-	#updatebutton {
-		background: #ff0000; 
-		width: 100%; 
-		font-size:3.0em; 
-		# margin-top: 0.5em; 
-		border: 0; 
-		color: white; 
-		padding: 0.5em;;
-	}
-	#updatebutton:hover {
-		background: #e00000;
-	}
-	#errormessage {
-		color: red;
-		font-weight: bold;
-	}
-	h1, h2 {
-		text-align: center;
-	}
-	.announcement {
-		background-color: #0080ff; 
-		color: white; 
-		padding: 1.0em;
-	}
-	.announcement a {
-		color: white;
-		text-decoration: underline;
-	}
-</style>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
+
+<link href="style.css" rel="stylesheet">
 
 <body>
 
 <h1>Lyset på Fysikkland</h1>
 
 <div class="announcement">
-<strong>
 Fysikkland legger vekt på åpenhet i data.
 Derfor er maskineriet bak lysloggen nå tilgjengelig på <a href="https://github.com/hersle/light">GitHub</a>.
-</strong>
+Alle brukere oppfordres til å melde inn feil og sende inn forslag til forbedringer her!
 </div>
 
-<h2>Abonner</h2>
-<p><strong>Nyhet: </strong>registrér deg her og motta varsler hver gang lyset på Fysikkland måles!</p>
-<div style="margin: 1em 0;">
+<div class="announcement">
+<strong>Nyhet: </strong>registrér deg for å motta varsler hver gang lyset på Fysikkland måles!
 	<form>
-	<p style="display: inline;">Epost: </p>
-	<input id="emailinput" type="text"/>
+	<label for="email">Epost:</label>
+	<input id="emailinput" name="email" type="text"/>
 	<button type="submit" onclick="sendSubscription()">Abonner</button>
 	</form>
 </div>
@@ -83,18 +39,18 @@ Derfor er maskineriet bak lysloggen nå tilgjengelig på <a href="https://github
 	}
 </script>
 
-<table style="margin-left: auto; margin-right: auto; width: 100%; font-size: 1.5em;">
+<table>
 	<tr>
-		<th width="50%">Dato:</td>
-		<td id="sdate" width="50%" align="center"></td>
+		<th>Dato</td>
+		<td id="sdate"></td>
 	</tr>
 	<tr>
-		<th width="50%">Servertid:</td>
-		<td id="stime" width="50%" align="center"></td>
+		<th>Servertid</td>
+		<td id="stime"></td>
 	</tr>
 	<tr>
-		<th width="50%">Estimert slukketid:</th>
-		<td id="prediction" width="50%" align="center">
+		<th>Estimert slukketid</th>
+		<td id="prediction">
 			<?php
 			$output = shell_exec("python3 light.py 2>&1");
 			echo "$output";
@@ -105,7 +61,7 @@ Derfor er maskineriet bak lysloggen nå tilgjengelig på <a href="https://github
 
 <p id="errormessage"></p>
 
-<form style="margin: 0";>
+<form>
 <?php
 $ans = shell_exec("python3 light.py open");
 if ($ans === "yes\n") {
@@ -196,8 +152,8 @@ if ($ans === "yes\n") {
 
 <h2>Lyslogg</h2>
 
-<table style="margin: 0 auto; width: 100%;">
-<tr><th width="50%">Dato</th><th width="50%">Klokkeslett</th></tr>
+<table>
+<tr><th>Dato</th><th>Klokkeslett</th></tr>
 <?php
 $lines = file("light.dat");
 $lines = array_reverse($lines);
@@ -205,7 +161,7 @@ foreach ($lines as $line_num => $line) {
 	$parts = preg_split("/\s+/", $line);
 	$date = $parts[0];
 	$time = $parts[1];
-	echo "<tr align=\"center\" width=\"50%\"><td>$date</td><td align=\"center\" width=\"50%\">$time</td></tr>";
+	echo "<tr><td>$date</td><td>$time</td></tr>";
 }
 ?>
 

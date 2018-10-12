@@ -1,0 +1,53 @@
+body {
+	font-family: sans-serif;
+	max-width: 600px;
+	margin: 0px auto;
+	padding: 10px;
+}
+table {
+	border-collapse: collapse;
+}
+table th, table td {
+	padding: 0.3em;
+	border: 1px solid black;
+}
+#updatebutton {
+	background: #ff0000; 
+	width: 100%; 
+	font-size:3.0em; 
+	# margin-top: 0.5em; 
+	border: 0; 
+	color: white; 
+	padding: 0.5em;;
+}
+#updatebutton:hover {
+	background: #e00000;
+}
+#errormessage {
+	color: red;
+	font-weight: bold;
+}
+h1, h2 {
+	text-align: center;
+}
+.announcement {
+	background-color: #0080ff; 
+	color: white; 
+	padding: 1.0em;
+	margin-bottom: 10px;
+}
+.announcement a {
+	color: white;
+	text-decoration: underline;
+}
+.announcement form {
+	margin-top: 1em;
+}
+table {
+	margin-left: auto; 
+	margin-right: auto; 
+	width: 100%; 
+	font-size: 1.5em;
+	table-layout: fixed;
+	text-align: center;
+}
