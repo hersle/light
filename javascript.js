@@ -80,7 +80,7 @@ function updateServerTime() {
 
 function updatePrediction() {
 	let req = new XMLHttpRequest();
-	req.open("GET", "prediction.php");
+	req.open("GET", "predict.php");
 	req.addEventListener("load", function() {
 		let secs = parseInt(req.response);
 		prediction = new Date(secs);
