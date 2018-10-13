@@ -12,16 +12,12 @@ table th, table td {
 	border: 1px solid black;
 }
 #updatebutton {
-	background: #ff0000; 
 	width: 100%; 
 	font-size:3.0em; 
 	margin-top: 0.5em; 
 	border: 0; 
 	color: white; 
 	padding: 0.5em;;
-}
-#updatebutton:hover {
-	background: #e00000;
 }
 #errormessage {
 	color: red;
