@@ -131,13 +131,36 @@ function subscribe() {
 	req.send("email=" + email);
 }
 
+function updateTable() {
+	let req = new XMLHttpRequest();
+	req.open("GET", "list.php");
+	req.addEventListener("load", function() {
+		let table = document.getElementById("lighttable");
+
+		let times = req.response.split("\n");
+		for (let i = times.length - 2; i >= 0; i--) { // skip last empty line
+			console.log(times[i]);
+			let msecs = parseInt(times[i]);
+			let time = new Date(msecs);
+
+			let row = table.insertRow();
+			let cell1 = row.insertCell();
+			let cell2 = row.insertCell();
+			cell1.innerHTML = dateString(time);
+			cell2.innerHTML = timeString(time);
+		}
+	});
+	req.send();
+
+}
+
 window.addEventListener("load", function() {
 	updatePrediction();
 	updateServerTime();
 	updateStatus();
+	updateTable();
 	setInterval(updateTimer, timerUpdateInterval);
 
 	document.getElementById("subscribebutton").addEventListener("click", subscribe);
 	document.getElementById("updatebutton").addEventListener("click", register);
-
 });
