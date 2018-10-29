@@ -130,7 +130,7 @@ elif args[0] == "list":
     epoch = datetime.datetime.utcfromtimestamp(0)
     for line in file:
         time = datetime.datetime.strptime(line, "%d.%m.%y %H:%M:%S\n")
-        millis = int(time.timestamp() * 1000)
+        millis = int((time - epoch).total_seconds() * 1000)
         print(millis)
     file.close()
 elif args[0] == "subscribe":

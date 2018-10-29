@@ -52,7 +52,7 @@ Alle brukere oppfordres til å melde inn feil, sende inn forbedringsforslag og l
 <h2>Lyslogg</h2>
 
 <table id="lighttable">
-<tr><th>Dato</th><th>Klokkeslett</th></tr>
+<tr><th>Dato</th><th>Målt slukketid</th><th>Estimert slukketid</th><th>Avvik</th></tr>
 </table>
 
 <h2>Om lyset på Fysikkland</h2>

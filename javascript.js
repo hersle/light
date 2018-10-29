@@ -6,6 +6,9 @@ var prediction;
 var registered = false;
 
 function timeString(date) {
+	if (isNaN(date)) {
+		return "--:--:--.---";
+	}
 	let h = String(date.getHours()).padStart(2, "0");
 	let m = String(date.getMinutes()).padStart(2, "0");
 	let s = String(date.getSeconds()).padStart(2, "0");
@@ -14,6 +17,9 @@ function timeString(date) {
 }
 
 function dateString(date) {
+	if (isNaN(date)) {
+		return "--:--:--.---";
+	}
 	let d = String(date.getDate()).padStart(2, "0");
 	let m = String(date.getMonth() + 1).padStart(2, "0");
 	let y = String(date.getFullYear()).padStart(2, "0");
@@ -137,21 +143,46 @@ function updateTable() {
 	req.addEventListener("load", function() {
 		let table = document.getElementById("lighttable");
 
+		let sx = 0, sy = 0, sxx = 0, sxy = 0, syy = 0;
+
 		let times = req.response.split("\n");
-		for (let i = times.length - 2; i >= 0; i--) { // skip last empty line
-			console.log(times[i]);
+		let n = times.length - 1;
+		for (let i = 0; i < n; i++) { // skip last empty line
 			let msecs = parseInt(times[i]);
 			let time = new Date(msecs);
 
-			let row = table.insertRow();
+			// predict based on previous measurements
+			let delta = i * sxx - sx * sx;
+			let a = (i * sxy - sx * sy) / delta;
+			let b = (sy * sxx - sx * sxy) / delta;
+
+			let days = Math.floor(msecs / (24 * 60 * 60 * 1000));
+			let msecs_pred = a * days + b;
+			let time_pred = new Date(msecs_pred);
+
+			let row = table.insertRow(1);
 			let cell1 = row.insertCell();
 			let cell2 = row.insertCell();
+			let cell3 = row.insertCell();
+			let cell4 = row.insertCell();
 			cell1.innerHTML = dateString(time);
 			cell2.innerHTML = timeString(time);
+			cell3.innerHTML = timeString(time_pred);
+			let offset = ((msecs - msecs_pred) / 1000).toFixed(2);
+			let sign = offset > 0 ? "+" : "";
+			if (!isNaN(offset)) {
+				cell4.innerHTML = sign + offset + " s";
+			}
+
+			// for next
+			sx += days;
+			sy += msecs;
+			sxx += days * days;
+			sxy += days * msecs;
+			syy += msecs * msecs;
 		}
 	});
 	req.send();
-
 }
 
 window.addEventListener("load", function() {
