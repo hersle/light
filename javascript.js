@@ -9,33 +9,45 @@ function dateUTC(date) {
 	return new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
 }
 
-function timeString(date) {
+function dateString(date, format) {
 	if (isNaN(date)) {
-		return "--:--:--.---";
+		var sss = "---";
+		var ss = "--";
+		var mm = "--";
+		var hh = "--";
+		var DD = "--";
+		var MM = "--";
+		var YYYY = "----";
+		var YY = "--";
+	} else {
+		var sss = String(date.getMilliseconds()).padStart(3, "0");
+		var ss = String(date.getSeconds()).padStart(2, "0");
+		var mm = String(date.getMinutes()).padStart(2, "0");
+		var hh = String(date.getHours()).padStart(2, "0");
+		var DD = String(date.getDate()).padStart(2, "0");
+		var MM = String(date.getMonth() + 1).padStart(2, "0");
+		var YYYY = String(date.getFullYear()).padStart(2, "0");
+		var YY = YYYY % 100;
 	}
-	let h = String(date.getHours()).padStart(2, "0");
-	let m = String(date.getMinutes()).padStart(2, "0");
-	let s = String(date.getSeconds()).padStart(2, "0");
-	let ms = String(date.getMilliseconds()).padStart(3, "0");
-	return h + ":" + m + ":" + s + "." + ms;
-}
 
-function dateString(date) {
-	if (isNaN(date)) {
-		return "--:--:--.---";
-	}
-	let d = String(date.getDate()).padStart(2, "0");
-	let m = String(date.getMonth() + 1).padStart(2, "0");
-	let y = String(date.getFullYear()).padStart(2, "0");
-	return d + "." + m + "." + y;
+	format = format.replace("sss", sss);
+	format = format.replace("ss", ss);
+	format = format.replace("mm", mm);
+	format = format.replace("hh", hh);
+	format = format.replace("DD", DD);
+	format = format.replace("MM", MM);
+	format = format.replace("YYYY", YYYY);
+	format = format.replace("YY", YY);
+
+	return format;
 }
 
 function updateTimer() {
 	let ctime = new Date();
 	let stime = new Date(ctime.getTime() + offset);
 
-	document.getElementById("stime").innerHTML = timeString(stime);
-	document.getElementById("sdate").innerHTML = dateString(stime);
+	document.getElementById("stime").innerHTML = dateString(stime, "hh:mm:ss.sss");
+	document.getElementById("sdate").innerHTML = dateString(stime, "DD.MM.YY");
 
 	let text = "";
 	let color = "";
@@ -94,7 +106,7 @@ function updatePrediction() {
 	req.addEventListener("load", function() {
 		let secs = parseInt(req.response);
 		prediction = new Date(secs);
-		document.getElementById("prediction").innerHTML = timeString(prediction);
+		document.getElementById("prediction").innerHTML = dateString(prediction, "hh:mm:ss.sss");
 	});
 	req.send();
 }
@@ -172,9 +184,9 @@ function updateTable() {
 			let cell3 = row.insertCell();
 			let cell4 = row.insertCell();
 			let cell5 = row.insertCell();
-			cell1.innerHTML = dateString(time);
-			cell2.innerHTML = timeString(time);
-			cell3.innerHTML = timeString(time_pred);
+			cell1.innerHTML = dateString(time, "DD.MM.YY");
+			cell2.innerHTML = dateString(time, "hh:mm:ss");
+			cell3.innerHTML = dateString(time_pred, "hh:mm:ss.sss");
 			let offset = ((msecs - msecs_pred) / 1000).toFixed(2);
 			let sign = offset > 0 ? "+" : "";
 			if (!isNaN(offset)) {
