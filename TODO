@@ -6,3 +6,4 @@ deviation column
 minimize network requests
 in period in which registration is open: check often for whether someone else registers it, and update clients, so they are notified when someone else registers?
 party mode?
+make button more responsive
