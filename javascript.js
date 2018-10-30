@@ -183,7 +183,6 @@ function updateTable() {
 			let cell2 = row.insertCell();
 			let cell3 = row.insertCell();
 			let cell4 = row.insertCell();
-			let cell5 = row.insertCell();
 			cell1.innerHTML = dateString(time, "DD.MM.YY");
 			cell2.innerHTML = dateString(time, "hh:mm:ss");
 			cell3.innerHTML = dateString(time_pred, "hh:mm:ss.sss");
@@ -191,13 +190,6 @@ function updateTable() {
 			let sign = offset > 0 ? "+" : "";
 			if (!isNaN(offset)) {
 				cell4.innerHTML = sign + offset + " s";
-				if (offset > 5) {
-					cell4.style.backgroundColor = "red";
-					cell5.innerHTML = "Ja";
-				} else {
-					cell4.style.backgroundColor = "green";
-					cell5.innerHTML = "Nei";
-				}
 			}
 
 			// for next
