@@ -51,6 +51,9 @@ table {
 	margin-right: auto; 
 	width: 100%; 
 	font-size: 1.5em;
-	table-layout: fixed;
+	table-layout: auto;
 	text-align: center;
+}
+#lighttable {
+	font-size: 1em;
 }

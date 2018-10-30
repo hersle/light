@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 
-<link href="style.css" rel="stylesheet">
+<link href="style.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript" src="javascript.js"></script>
 
 <body>
@@ -51,19 +51,8 @@ Alle brukere oppfordres til å melde inn feil, sende inn forbedringsforslag og l
 
 <h2>Lyslogg</h2>
 
-<table>
-<tr><th>Dato</th><th>Klokkeslett</th></tr>
-<?php
-$lines = file("light.dat");
-$lines = array_reverse($lines);
-foreach ($lines as $line_num => $line) {
-	$parts = preg_split("/\s+/", $line);
-	$date = $parts[0];
-	$time = $parts[1];
-	echo "<tr><td>$date</td><td>$time</td></tr>";
-}
-?>
-
+<table id="lighttable">
+<tr><th>Dato</th><th>Målt slukketid</th><th>Estimert slukketid</th><th>Avvik</th></tr>
 </table>
 
 <h2>Om lyset på Fysikkland</h2>

@@ -127,9 +127,11 @@ elif args[0] == "open":
         print("yes")
 elif args[0] == "list":
     file = open("light.dat", "r")
+    epoch = datetime.datetime.utcfromtimestamp(0)
     for line in file:
-        line = line.strip()
-        print(line)
+        time = datetime.datetime.strptime(line, "%d.%m.%y %H:%M:%S\n")
+        millis = int((time - epoch).total_seconds() * 1000)
+        print(millis)
     file.close()
 elif args[0] == "subscribe":
     print("Epostregistrering stengt.")
