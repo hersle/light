@@ -20,7 +20,21 @@ def notify():
     server.connect(smtpaddr, port)
     server.login(fromaddr, password)
 
-    text = "Navigér til http://folk.ntnu.no/hermasl/light for å se målingen!\n"
+    text = ""
+    text += "Navigér til http://folk.ntnu.no/hermasl/light for å se målingen!\n"
+    text += "\n"
+    text += "Som medlem av Fysikklandlysets epostliste bidrar du til sikker arkivering av lysloggen gjennom et distribuert blockchain-inspirert sikkerhetskopieringssystem.\n"
+    text += "Du vil derfor finne en kopi av lysloggen under.\n"
+    text += "Fysikkland anmoder deg om å ta godt vare på kopien i tilfelle noe ufysikalsk inntreffer og den sentrale loggen tilintetgjøres helt eller delvis.\n"
+    text += "\n"
+    text += "Fysikkland ønsker deg en fin dag videre.\n"
+    text += "\n"
+    text += "--- START LYSLOGG SIKKERHETSKOPI ---\n"
+    file = open("light.dat", "r")
+    for line in file:
+        text += line
+    file.close()
+    text += "--- SLUTT LYSLOGG SIKKERHETSKOPI ---\n"
     msg = MIMEText(text)
     msg["From"] = fromaddr
     msg["Subject"] = "Noen målte nettopp lyset på Fysikkland!"

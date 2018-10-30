@@ -77,16 +77,6 @@ function updateTimer() {
 	}
 	document.getElementById("updatebutton").innerHTML = text;
 	document.getElementById("updatebutton").style.backgroundColor = color;
-
-	/*
-	if (document.getElementById("updatebutton").style.backgroundColor == "grey") {
-	} else if (Math.abs(stime - prediction) <= registrationHalfInterval) {
-		document.getElementById("updatebutton").style.backgroundColor = "green";
-	} else {
-		document.getElementById("updatebutton").style.backgroundColor = "red";
-		document.getElementById("updatebutton").innerHTML = "Lysregistrering åpner om " + Math.floor(((prediction - registrationHalfInterval) - stime) / 1000) + " sekunder";
-	}
-	*/
 }
 
 function updateServerTime() {
