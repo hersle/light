@@ -5,6 +5,10 @@ var offset = 0;
 var prediction;
 var registered = false;
 
+function dateUTC(date) {
+	return new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+}
+
 function timeString(date) {
 	if (isNaN(date)) {
 		return "--:--:--.---";
@@ -150,6 +154,7 @@ function updateTable() {
 		for (let i = 0; i < n; i++) { // skip last empty line
 			let msecs = parseInt(times[i]);
 			let time = new Date(msecs);
+			time = dateUTC(time);
 
 			// predict based on previous measurements
 			let delta = i * sxx - sx * sx;
@@ -159,6 +164,7 @@ function updateTable() {
 			let days = Math.floor(msecs / (24 * 60 * 60 * 1000));
 			let msecs_pred = a * days + b;
 			let time_pred = new Date(msecs_pred);
+			time_pred = dateUTC(time_pred);
 
 			let row = table.insertRow(1);
 			let cell1 = row.insertCell();
