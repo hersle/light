@@ -54,7 +54,7 @@ def notify():
         print(e)
         exit()
 
-    print("mailed", msg["To"])
+    # print("mailed", msg["To"])
     server.quit()
 
 def linregr(x, y):
