@@ -181,6 +181,9 @@ function updateTable() {
 			if (!isNaN(offset)) {
 				cell3.innerHTML = dateString(time_pred, "hh:mm:ss.sss");
 				cell4.innerHTML = sign + offset + " s";
+				if (offset > 5) {
+					cell4.style.backgroundColor = "yellow";
+				}
 			}
 
 			// for next
