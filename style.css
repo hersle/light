@@ -14,7 +14,6 @@ table th, table td {
 #updatebutton {
 	width: 100%; 
 	font-size:3.0em; 
-	margin-top: 0.5em; 
 	border: 0; 
 	color: white; 
 	padding: 0.5em;;
@@ -49,6 +48,7 @@ h1, h2 {
 table {
 	margin-left: auto; 
 	margin-right: auto; 
+	margin-bottom: 10px;
 	width: 100%; 
 	font-size: 1.5em;
 	table-layout: auto;
@@ -56,4 +56,20 @@ table {
 }
 #lighttable {
 	font-size: 1em;
+}
+#subscribeform {
+	margin-top: 10px;
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+#subscribeform > label {
+	font-weight: bold;
+	text-align: center;
+	grid-column: 1;
+}
+#subscribeform > input {
+	grid-column: 2;
+}
+#subscribeform > button {
+	grid-column: 2;
 }
