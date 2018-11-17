@@ -164,5 +164,11 @@ elif args[0] == "subscribe":
     line = str(code) + " " + email + "\n"
     file.write(line)
     file.close()
+
+    subject = "Bekreftelse av varsling ved måling av lysslukking"
+    text = ""
+    text += "\"" + email + "\" har anmodet om å motta varsler hver gang lysslukking på Fysikkland måles.\n"
+    text += "For å bekrefte abonemmentet, klikk <a href="">her</a>.\n"
+    mail([email], subject, text)
 else:
     print("Ukjent kommando.")
