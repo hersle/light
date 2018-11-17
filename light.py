@@ -25,7 +25,7 @@ def mail(recipients, subject, text):
     msg = MIMEText(text)
     msg["From"] = fromaddr
     msg["To"] = ", ".join(recipients)
-    msg["Subject"] = "Noen målte nettopp lyset på Fysikkland!"
+    msg["Subject"] = subject
 
     try:
         server.send_message(msg)
