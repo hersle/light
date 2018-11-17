@@ -1,9 +1,8 @@
-unsubscription
-use email subscribers as distributed backup system?
 represent server time data as seconds since UTC epoch
-fix subscription system
 deviation column
 minimize network requests
 in period in which registration is open: check often for whether someone else registers it, and update clients, so they are notified when someone else registers?
 party mode?
 make button more responsive
+store subscription codes
+send unsubscription link in individual emails with code
