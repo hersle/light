@@ -188,7 +188,7 @@ elif args[0] == "subscribe":
     subject = "Bekreftelse av varsling ved måling av lysslukking"
     text = ""
     text += "\"" + email + "\" har anmodet om å motta varsler hver gang lysslukking på Fysikkland måles.\n"
-    text += "For å bekrefte abonemmentet, klikk <a href=\"" + link + "\">her</a>.\n"
+    text += "For å bekrefte abonnementet, klikk <a href=\"" + link + "\">her</a>.\n"
     mail([email], subject, text)
     print("En bekreftelsesepost er sendt til " + email + ".")
 elif args[0] == "confirm":
