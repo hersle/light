@@ -162,9 +162,6 @@ elif args[0] == "list":
         print(millis)
     file.close()
 elif args[0] == "subscribe":
-    print("Epostregistrering stengt.")
-    # exit()
-
     email = args[1]
 
     # validate email
