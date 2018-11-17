@@ -219,5 +219,29 @@ elif args[0] == "confirm":
         print(email + " bekreftet.")
     else:
         print(email + " ikke bekreftet.")
+elif args[0] == "unsubscribe":
+    print("Stengt.")
+    exit()
+
+    email = args[1]
+
+    file = open("subscribers", "r")
+    lines = file.readlines()
+    file.close()
+
+    found = False
+    file = open("subscribers", "w")
+    for line in lines:
+        if line.strip() == email:
+            found = True
+        else:
+            file.write(line)
+    file.close()
+
+    if found:
+        print("Abonnementet til " + email + " er avsluttet.")
+    else:
+        print("Fant ikke " + email + ".")
+        
 else:
     print("Ukjent kommando.")
