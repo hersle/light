@@ -6,6 +6,7 @@ import datetime
 import smtplib
 import time
 import random
+import string
 from email.mime.text import MIMEText
 
 args = ["", "", ""]
@@ -122,6 +123,13 @@ def log(str):
     file.write(line)
     file.close()
 
+def createconfirmationcode():
+    # random string
+    code = ""
+    for i in range(0, 30):
+        code += random.choice(string.ascii_lowercase)
+    return code
+
 if args[0] == "" or args[0] == "predict":
     epoch = datetime.datetime.utcfromtimestamp(0)
     print(int(getprediction().timestamp() * 1000))
@@ -155,14 +163,14 @@ elif args[0] == "list":
     file.close()
 elif args[0] == "subscribe":
     print("Epostregistrering stengt.")
-    exit()
+    # exit()
 
     random.seed(time.time())
     email = args[1]
-    code = random.randint(1000000000, 9999999999)
+    code = createconfirmationcode()
     file = open("subscribers_unconfirmed", "r")
     lines = file.readlines()
-    line = str(code) + " " + email + "\n"
+    line = code + " " + email + "\n"
     lines.append(line)
     if len(lines) >= 50: # only keep 50 most recent subscription requests
         lines = lines[len(lines)-50:]
@@ -172,7 +180,7 @@ elif args[0] == "subscribe":
     file.close()
 
     link = "http://folk.ntnu.no/hermasl/light/confirm_subscription.php"
-    link += "?email=" + email + "&code=" + str(code)
+    link += "?email=" + email + "&code=" + code
 
     subject = "Bekreftelse av varsling ved måling av lysslukking"
     text = ""
