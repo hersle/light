@@ -22,7 +22,7 @@ def mail(recipients, subject, text):
     server.connect(smtpaddr, port)
     server.login(fromaddr, password)
 
-    msg = MIMEText(text)
+    msg = MIMEText(text, "html")
     msg["From"] = fromaddr
     msg["To"] = ", ".join(recipients)
     msg["Subject"] = subject
@@ -165,10 +165,13 @@ elif args[0] == "subscribe":
     file.write(line)
     file.close()
 
+    link = "http://folk.ntnu.no/hermasl/light/confirm_subscription.php"
+    link += "?email=" + email + "&code=" + code
+
     subject = "Bekreftelse av varsling ved måling av lysslukking"
     text = ""
     text += "\"" + email + "\" har anmodet om å motta varsler hver gang lysslukking på Fysikkland måles.\n"
-    text += "For å bekrefte abonemmentet, klikk <a href="">her</a>.\n"
+    text += "For å bekrefte abonemmentet, klikk <a href=\"" + link + "\">her</a>.\n"
     mail([email], subject, text)
 elif args[0] == "confirm":
     email = args[1]
