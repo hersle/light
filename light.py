@@ -10,7 +10,7 @@ args = ["", ""]
 for i in range(0, min(len(args), len(sys.argv[1:]))):
     args[i] = sys.argv[1+i]
 
-def notify():
+def mail(recipients, subject, text):
     fromaddr = "fysikklandlyset@mail.com"
     password = "Fysikkland123"
     smtpaddr = "smtp.mail.com"
@@ -19,6 +19,29 @@ def notify():
     server = smtplib.SMTP()
     server.connect(smtpaddr, port)
     server.login(fromaddr, password)
+
+    msg = MIMEText(text)
+    msg["From"] = fromaddr
+    msg["To"] = ", ".join(recipients)
+    msg["Subject"] = "Noen målte nettopp lyset på Fysikkland!"
+
+    try:
+        server.send_message(msg)
+    except Exception as e:
+        print(e)
+        exit()
+
+    server.quit()
+
+def notify():
+    recipients = []
+    file = open("subscribers", "r")
+    for line in file:
+        email = line.strip()
+        recipients.append(email)
+    file.close()
+
+    subject = "Noen målte nettopp lyset på Fysikkland!"
 
     text = ""
     text += "Navigér til http://folk.ntnu.no/hermasl/light for å se målingen!\n"
@@ -35,27 +58,8 @@ def notify():
         text += line
     file.close()
     text += "--- SLUTT LYSLOGG SIKKERHETSKOPI ---\n"
-    msg = MIMEText(text)
-    msg["From"] = fromaddr
-    msg["Subject"] = "Noen målte nettopp lyset på Fysikkland!"
 
-    recipients = []
-    file = open("subscribers", "r")
-    for line in file:
-        email = line.strip()
-        recipients.append(email)
-    file.close()
-
-    msg["To"] = ", ".join(recipients)
-
-    try:
-        server.send_message(msg)
-    except Exception as e:
-        print(e)
-        exit()
-
-    # print("mailed", msg["To"])
-    server.quit()
+    mail(recipients, subject, text)
 
 def linregr(x, y):
         assert len(x) == len(y), "different number of x and y values"
