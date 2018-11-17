@@ -124,6 +124,7 @@ function register() {
 		} else {
 			document.getElementById("response").innerHTML = req.response;
 			document.getElementById("response").style.display = "block";
+			window.location.hash = "response"
 		}
 	});
 	req.send();
@@ -139,6 +140,7 @@ function subscribe() {
 		document.getElementById("response").innerHTML = req.response;
 		document.getElementById("response").style.display = "block";
 		document.getElementById("emailinput").value = "";
+		window.location.hash = "response"
 	});
 	req.send("email=" + email);
 }
