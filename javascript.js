@@ -147,7 +147,8 @@ function updateTable() {
 	let req = new XMLHttpRequest();
 	req.open("GET", "list.php");
 	req.addEventListener("load", function() {
-		let table = document.getElementById("lighttable");
+		let tabletop = document.getElementById("lighttabletop");
+		let tablebottom = document.getElementById("lighttablebottom");
 
 		let sx = 0, sy = 0, sxx = 0, sxy = 0, syy = 0;
 
@@ -168,7 +169,12 @@ function updateTable() {
 			let time_pred = new Date(msecs_pred);
 			time_pred = dateUTC(time_pred);
 
-			let row = table.insertRow(1);
+			if (n - i <= 5) {
+				var row = tabletop.insertRow(1);
+			} else {
+				var row = tablebottom.insertRow(0);
+			}
+
 			let cell1 = row.insertCell();
 			let cell2 = row.insertCell();
 			let cell3 = row.insertCell();
@@ -206,4 +212,15 @@ window.addEventListener("load", function() {
 
 	document.getElementById("subscribebutton").addEventListener("click", subscribe);
 	document.getElementById("updatebutton").addEventListener("click", register);
+	document.getElementById("tablecollapser").addEventListener("click", function(){
+		if (document.getElementById("lighttablebottom").style.display == "none") {
+			document.getElementById("lighttablebottom").style.display = "";
+			document.getElementById("tablecollapser").innerHTML = "Vis færre målinger"
+		} else {
+			document.getElementById("lighttablebottom").style.display = "none";
+			document.getElementById("tablecollapser").innerHTML = "Vis alle målinger"
+		}
+	});
+
+	document.getElementById("tablecollapser").click();
 });
