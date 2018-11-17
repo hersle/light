@@ -165,8 +165,14 @@ elif args[0] == "subscribe":
     print("Epostregistrering stengt.")
     # exit()
 
-    random.seed(time.time())
     email = args[1]
+
+    # validate email
+    if not re.match("[^@]+@[^@]+\.[^@]+", email):
+        print("Ugyldig formatert epostadresse.")
+        exit()
+
+    random.seed(time.time())
     code = createconfirmationcode()
     file = open("subscribers_unconfirmed", "r")
     lines = file.readlines()
