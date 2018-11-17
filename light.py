@@ -160,9 +160,15 @@ elif args[0] == "subscribe":
     random.seed(time.time())
     email = args[1]
     code = random.randint(1000000000, 9999999999)
-    file = open("subscribers_unconfirmed", "a")
+    file = open("subscribers_unconfirmed", "r")
+    lines = file.readlines()
     line = str(code) + " " + email + "\n"
-    file.write(line)
+    lines.append(line)
+    if len(lines) >= 50: # only keep 50 most recent subscription requests
+        lines = lines[len(lines)-50:]
+    file.close()
+    file = open("subscribers_unconfirmed", "w")
+    file.writelines(lines)
     file.close()
 
     link = "http://folk.ntnu.no/hermasl/light/confirm_subscription.php"
