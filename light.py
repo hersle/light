@@ -4,6 +4,8 @@ import sys
 import re
 import datetime
 import smtplib
+import time
+import random
 from email.mime.text import MIMEText
 
 args = ["", ""]
@@ -155,9 +157,11 @@ elif args[0] == "subscribe":
     print("Epostregistrering stengt.")
     exit()
 
+    random.seed(time.time())
     email = args[1]
-    file = open("subscribers", "a")
-    line = email + "\n"
+    code = random.randint(1, 9999999999)
+    file = open("subscribers_unconfirmed", "a")
+    line = str(code) + " " + email + "\n"
     file.write(line)
     file.close()
 else:
