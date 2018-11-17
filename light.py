@@ -159,7 +159,7 @@ elif args[0] == "subscribe":
 
     random.seed(time.time())
     email = args[1]
-    code = random.randint(1, 9999999999)
+    code = random.randint(1000000000, 9999999999)
     file = open("subscribers_unconfirmed", "a")
     line = str(code) + " " + email + "\n"
     file.write(line)
