@@ -166,7 +166,7 @@ elif args[0] == "subscribe":
     file.close()
 
     link = "http://folk.ntnu.no/hermasl/light/confirm_subscription.php"
-    link += "?email=" + email + "&code=" + code
+    link += "?email=" + email + "&code=" + str(code)
 
     subject = "Bekreftelse av varsling ved måling av lysslukking"
     text = ""
