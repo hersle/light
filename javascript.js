@@ -49,33 +49,17 @@ function updateTimer() {
 	document.getElementById("stime").innerHTML = dateString(stime, "hh:mm:ss.sss");
 	document.getElementById("sdate").innerHTML = dateString(stime, "DD.MM.YY");
 
-	let text = "";
-	let color = "";
-	let secs = Math.floor((stime - prediction) / 1000);
-	if (registered) {
-		text = "Slukking registrert";
-		color = "grey";
-	} else if (secs < -registrationHalfInterval) {
-		secs = -(secs + registrationHalfInterval);
-		text = "Registrering åpner om ";
-		if (secs <= 60) {
-			text += secs + " sekunder";
-		} else if (secs <= 60 * 60) {
-			let min = Math.floor(secs / 60);
-			text += min + " minutter";
-		} else {
-			let hours = Math.floor(secs / (60 * 60));
-			text += hours + " timer";
-		}
-		color = "grey";
-	} else if (secs > +registrationHalfInterval) {
-		text = "Slukking stengt";
-		color = "grey";
-	} else {
-		text = "Registrér slukking";
-		color = "green";
-	}
-	document.getElementById("updatebutton").innerHTML = text;
+	let msecs = Math.abs(stime - prediction);
+	let h = Math.floor(msecs / 3600000);
+	let m = Math.floor((msecs % 3600000) / 60000);
+	let s = Math.floor((msecs % 60000) / 1000);
+	let ms = msecs % 1000;
+	let diff = new Date(0, 0, 0, h, m, s, ms);
+
+	let sign = stime < prediction ? "−" : "+";
+	let text = sign + dateString(diff, "hh:mm:ss.sss");
+	let color = Math.abs(msecs / 1000) > registrationHalfInterval ? "red" : "green";
+	document.getElementById("updatebuttonsubtext").innerHTML = text;
 	document.getElementById("updatebutton").style.backgroundColor = color;
 }
 
