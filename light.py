@@ -172,8 +172,8 @@ elif args[0] == "subscribe":
     lines = file.readlines()
     line = code + " " + email + "\n"
     lines.append(line)
-    if len(lines) >= 50: # only keep 50 most recent subscription requests
-        lines = lines[len(lines)-50:]
+    if len(lines) >= 1000: # only keep 1000 most recent subscription requests
+        lines = lines[len(lines)-1000:]
     file.close()
     file = open("subscribers_unconfirmed", "w")
     file.writelines(lines)
