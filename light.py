@@ -8,7 +8,7 @@ import time
 import random
 from email.mime.text import MIMEText
 
-args = ["", ""]
+args = ["", "", ""]
 for i in range(0, min(len(args), len(sys.argv[1:]))):
     args[i] = sys.argv[1+i]
 
@@ -170,5 +170,31 @@ elif args[0] == "subscribe":
     text += "\"" + email + "\" har anmodet om å motta varsler hver gang lysslukking på Fysikkland måles.\n"
     text += "For å bekrefte abonemmentet, klikk <a href="">her</a>.\n"
     mail([email], subject, text)
+elif args[0] == "confirm":
+    email = args[1]
+    code = args[2]
+
+    file = open("subscribers_unconfirmed", "r")
+    lines = file.readlines()
+    file.close()
+
+    file = open("subscribers_unconfirmed", "w")
+    ok = False
+    for line in lines:
+        words = line.split()
+        if email == words[1] and code == words[0]:
+            ok = True
+        else:
+            file.write(line)
+    file.close()
+
+    if ok:
+        file = open("subscribers", "a")
+        line = email + "\n"
+        file.write(line)
+        file.close()
+        print(email + " bekreftet.")
+    else:
+        print(email + " ikke bekreftet.")
 else:
     print("Ukjent kommando.")
