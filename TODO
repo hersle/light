@@ -6,3 +6,4 @@ party mode?
 make button more responsive
 store subscription codes
 send unsubscription link in individual emails with code
+prevent same email from subscribing multiple times
