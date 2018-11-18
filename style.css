@@ -16,6 +16,7 @@ table th, table td {
 	border: 0; 
 	color: white; 
 	padding: 2.0em;;
+	margin-bottom: 10px;
 }
 #errormessage {
 	color: red;
@@ -79,4 +80,7 @@ table {
 }
 #updatebuttonsubtext {
 	font-size: 2em;
+}
+h2 {
+	margin-top: 2em;
 }
