@@ -165,7 +165,7 @@ elif args[0] == "subscribe":
     email = args[1]
 
     # validate email
-    if not re.match("[^@]+@[^@]+\.[^@]+", email):
+    if not re.match("[^@]+@[^@]+\.[^@]+", email) or email.split()[0] != email:
         print("Ugyldig formatert epostadresse.")
         exit()
 
