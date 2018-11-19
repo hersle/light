@@ -67,11 +67,12 @@ function updateServerTime() {
 	let req = new XMLHttpRequest();
 	req.open("GET", "time.php");
 	req.addEventListener("load", function() {
-		let secs = parseInt(req.response);
-		let stime = new Date(secs);
+		let ms = parseInt(req.response);
+		let stime = new Date(ms);
 		let ctime = new Date();
 		offset = stime.getTime() - ctime.getTime();
 	});
+	req.send();
 }
 
 function updatePrediction() {

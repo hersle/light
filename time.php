@@ -1,4 +1,4 @@
 <?php
-$secondsUTC = (int) (microtime(true) * 1000);
-echo $secondsUTC;
+$millisecondsUTC = (int) (microtime(true) * 1000);
+echo $millisecondsUTC;
 ?>
