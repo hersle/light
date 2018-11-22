@@ -1,4 +1,4 @@
 <?php
-$millisecondsUTC = (int) (microtime(true) * 1000);
+$millisecondsUTC = exec("./light.py time");
 echo $millisecondsUTC;
 ?>

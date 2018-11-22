@@ -102,5 +102,7 @@ elif args[0] == "list":
         millis = int((time - epoch).total_seconds() * 1000)
         print(millis)
     file.close()
+elif args[0] == "time":
+    print(int(time.time() * 1000))
 else:
     print("Ukjent kommando.")
