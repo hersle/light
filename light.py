@@ -78,10 +78,10 @@ if args[0] == "" or args[0] == "predict":
 elif args[0] == "add":
     # add new time
     now = datetime.datetime.now()
-    if not timeisreasonable(now):
-        print("Ufysikalsk tid. For stort avvik.")
-    elif registered(now):
+    if registered(now):
         print("Lys allerede registrert.")
+    elif not timeisreasonable(now):
+        print("Ufysikalsk tid. For stort avvik.")
     else:
         print("Registrert.")
         file = open("light.dat", "a")
