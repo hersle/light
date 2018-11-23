@@ -8,12 +8,20 @@ import time
 import random
 import string
 import measure
+import logging
 from email.mime.text import MIMEText
 
 if __name__ == "__main__":
+    logfilename = "log"
+    logminlevel = logging.DEBUG
+    logformat = "%(asctime)s: (%(levelname)s) %(message)s"
+    logging.basicConfig(filename=logfilename, level=logminlevel, format=logformat)
+
     args = ["", "", ""]
     for i in range(0, min(len(args), len(sys.argv[1:]))):
         args[i] = sys.argv[1+i]
+
+    logging.info("called with arguments %s", args)
 
     if args[0] == "" or args[0] == "predict":
         epoch = datetime.datetime.utcfromtimestamp(0)
