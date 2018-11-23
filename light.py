@@ -9,6 +9,7 @@ import random
 import string
 import measure
 import logging
+import mail
 from email.mime.text import MIMEText
 
 if __name__ == "__main__":
@@ -25,26 +26,33 @@ if __name__ == "__main__":
 
     if args[0] == "" or args[0] == "predict":
         epoch = datetime.datetime.utcfromtimestamp(0)
-        print(int(measure.getprediction().timestamp() * 1000))
+        ms = int(measure.getprediction().timestamp() * 1000)
+        print(ms)
+        logging.info("predicted lights out at %d", ms)
     elif args[0] == "add":
         # add new time
         now = datetime.datetime.now()
         if measure.registered(now):
             print("Lys allerede registrert.")
+            logging.info("not registered - already registered")
         elif not measure.timeisreasonable(now):
             print("Ufysikalsk tid. For stort avvik.")
+            logging.info("not registered - too large difference from prediction")
         else:
             print("Registrert.")
             file = open("light.dat", "a")
             line = now.strftime("%d.%m.%y %H:%M:%S\n")
             file.write(line)
             file.close()
+            logging.info("successfully registered lights out at %s", line.strip())
     elif args[0] == "open":
         now = datetime.datetime.now()
         if measure.registered(now):
             print("no")
+            logging.info("already registered")
         else:
             print("yes")
+            logging.info("light not registered")
     elif args[0] == "list":
         file = open("light.dat", "r")
         epoch = datetime.datetime.utcfromtimestamp(0)
@@ -53,16 +61,22 @@ if __name__ == "__main__":
             millis = int((time - epoch).total_seconds() * 1000)
             print(millis)
         file.close()
+        logging.info("succesfully listed previous measurements")
     elif args[0] == "time":
-        print(int(time.time() * 1000))
+        ms = int(time.time() * 1000)
+        print(ms)
+        logging.info("server time: %s ms after epoch", ms)
     elif args[0] == "notify":
-        notify()
+        mail.notify()
     elif args[0] == "subscribe":
         email = args[1]
+
+        logging.info("received subscription request from %s", email)
 
         # validate email
         if not re.match("[^@]+@[^@]+\.[^@]+", email) or email.split()[0] != email:
             print("Ugyldig formatert epostadresse.")
+            logging.info("denied subscription request - format error")
             exit()
 
         random.seed(time.time())
@@ -87,9 +101,12 @@ if __name__ == "__main__":
         text += "For å bekrefte abonnementet, klikk <a href=\"" + link + "\">her</a>.\n"
         mail([email], subject, text)
         print("En bekreftelsesepost er sendt til " + email + ".")
+        logging.info("processed subscription request, attempted to send confirmation email")
     elif args[0] == "confirm":
         email = args[1]
         code = args[2]
+
+        logging.info("received subscription confirmation request from %s", email)
 
         file = open("subscribers_unconfirmed", "r")
         lines = file.readlines()
@@ -111,8 +128,10 @@ if __name__ == "__main__":
             file.write(line)
             file.close()
             print(email + " bekreftet.")
+            logging.info("successfully confirmed subscription")
         else:
             print(email + " ikke bekreftet.")
+            logging.info("subscription not confirmed - email not found or incorrect code")
     elif args[0] == "unsubscribe":
         print("Stengt.")
         exit()

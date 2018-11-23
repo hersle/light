@@ -8,11 +8,8 @@ import smtplib
 import time
 import random
 import string
+import logging
 from email.mime.text import MIMEText
-
-args = ["", "", ""]
-for i in range(0, min(len(args), len(sys.argv[1:]))):
-    args[i] = sys.argv[1+i]
 
 def mail(recipients, subject, text):
     fromaddr = "fysikklandlyset@mail.com"
@@ -31,8 +28,10 @@ def mail(recipients, subject, text):
 
     try:
         server.send_message(msg)
+        logging.info("successfully sent email \"%s...\" to %s", subject[:7], [",".join([(email.split("@")[0][:3] + "...@" + email.split("@")[1]) for email in recipients])])
     except Exception as e:
         print(e)
+        logging.error("could not send email \"%s...\" to %s: %s", subject[:7], [",".join([(email.split("@")[0][:3] + "...@" + email.split("@")[1]) for email in recipients])], e)
         exit()
 
     server.quit()
