@@ -48,7 +48,7 @@ def notify():
     subject = "Noen målte nettopp lyset på Fysikkland!"
 
     text = ""
-    text += "Navigér til http://folk.ntnu.no/hermasl/light for å se målingen!\n"
+    text += "Navigér til <a href=\"http://folk.ntnu.no/hermasl/light\">folk.ntnu.no/hermasl/light</a> for å se målingen!\n"
     text += "\n"
     text += "Som medlem av Fysikklandlysets epostliste bidrar du til sikker arkivering av lysloggen gjennom et distribuert blockchain-inspirert sikkerhetskopieringssystem.\n"
     text += "Du vil derfor finne en kopi av lysloggen under.\n"
@@ -62,6 +62,7 @@ def notify():
         text += line
     file.close()
     text += "--- SLUTT LYSLOGG SIKKERHETSKOPI ---\n"
+    text = text.replace("\n", "<br>")
 
     mail(recipients, subject, text)
 
