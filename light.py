@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+import os
 import re
 import datetime
 import smtplib
@@ -65,7 +66,7 @@ if __name__ == "__main__":
     elif args[0] == "time":
         ms = int(time.time() * 1000)
         print(ms)
-        logging.info("server time: %s ms after epoch", ms)
+        logging.info("server time: %s ms (%s UTC) after epoch from \"%s\"", ms, datetime.datetime.utcfromtimestamp(int(ms / 1000)), os.popen("uname -a").read().split()[1])
     elif args[0] == "notify":
         mail.notify()
     elif args[0] == "subscribe":
