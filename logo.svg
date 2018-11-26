@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="164.38875"
-     inkscape:cy="-49.237462"
+     inkscape:zoom="5.6"
+     inkscape:cx="74.181436"
+     inkscape:cy="37.620768"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -71,7 +71,7 @@
      style="opacity:0.95999995"
      transform="translate(-42.009894,-77.274087)">
     <ellipse
-       style="fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+       style="fill:#fff100;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
        id="path4521"
        cx="71.07724"
        cy="84.093094"
@@ -198,7 +198,7 @@
        id="path4523-9-4-9-6-4-8"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:0.81350666;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+       style="fill:#fff100;fill-opacity:1;stroke:none;stroke-width:0.81350666;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
        d="m 48.058467,78.033799 h 6.616612 l -3.308306,8.280218 z"
        id="rect4926"
        inkscape:connector-curvature="0"
