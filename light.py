@@ -45,7 +45,7 @@ if __name__ == "__main__":
             line = now.strftime("%d.%m.%y %H:%M:%S\n")
             file.write(line)
             file.close()
-            logging.info("successfully registered lights out at %s", line.strip())
+            logging.info("successfully registered lights out at %s on machine \"%s\"", line.strip(), os.popen("uname -a").read().split()[1])
     elif args[0] == "open":
         now = datetime.datetime.now()
         if measure.registered(now):
