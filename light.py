@@ -19,7 +19,7 @@ if __name__ == "__main__":
     logfilename = "log"
     logminlevel = logging.DEBUG
     logformat = "%(asctime)s @ " + machinename + "-" + pid + ": (%(levelname)s) %(message)s"
-    logging.basicConfig(filename=logfilename, level=logminlevel, format=logformat)
+    logging.basicConfig(level=logminlevel, format=logformat, handlers=[logging.FileHandler(logfilename, "a", "utf-8")])
 
     args = ["", "", ""]
     for i in range(0, min(len(args), len(sys.argv[1:]))):

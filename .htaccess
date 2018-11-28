@@ -7,3 +7,7 @@ Deny from all
 Order Allow,Deny
 Deny from all
 </Files>
+
+<Files "log">
+Header set Content-Type "text/plain; charset=utf-8"
+</Files>

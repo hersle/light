@@ -30,7 +30,6 @@ def mail(recipients, subject, text):
         server.send_message(msg)
         logging.info("successfully sent email \"%s...\" to %s", subject[:7], [",".join([(email.split("@")[0][:3] + "...@" + email.split("@")[1]) for email in recipients])])
     except Exception as e:
-        print(e)
         logging.error("could not send email \"%s...\" to %s: %s", subject[:7], [",".join([(email.split("@")[0][:3] + "...@" + email.split("@")[1]) for email in recipients])], e)
         exit()
 
