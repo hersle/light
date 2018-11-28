@@ -5,8 +5,21 @@ var offset = 0;
 var prediction;
 var registered = false;
 
+// Returns the given date represented with a UTC timezone
 function dateUTC(date) {
 	return new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+}
+
+function dateUTCLocal(date) {
+	return new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+}
+
+function stripDateTimeUTC(date) {
+	date.setUTCHours(0);
+	date.setUTCMinutes(0);
+	date.setUTCSeconds(0);
+	date.setUTCMilliseconds(0);
+	return date;
 }
 
 function dateString(date, format) {
@@ -186,6 +199,26 @@ function updateTable() {
 			sxy += days * msecs;
 			syy += msecs * msecs;
 		}
+
+		// determine streak by counting backwards
+		let currdate = dateUTCLocal(new Date());
+		let streak = 0;
+		for (let i = n - 1; i >= 0; i--) {
+			let msecs = parseInt(times[i]);
+			let prevdate = new Date(msecs);
+
+			let currdatedate = stripDateTimeUTC(currdate);
+			let prevdatedate = stripDateTimeUTC(prevdate);
+			let diff = currdatedate.getTime() - prevdatedate.getTime();
+			if (diff <= 24 * 60 * 60 * 1000) {
+				streak++;
+			} else {
+				break;
+			}
+
+			currdate = prevdate;
+		}
+		document.getElementById("streakcount").innerHTML = streak;
 	});
 	req.send();
 }
