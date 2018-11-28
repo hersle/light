@@ -1,4 +1,4 @@
 <?php
-$prediction = exec("./light.py");
+$prediction = exec("./light.py predict");
 echo "$prediction";
 ?>

@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     logging.info("executing \"%s\"", " ".join(sys.argv))
 
-    if args[0] == "" or args[0] == "predict":
+    if args[0] == "predict":
         epoch = datetime.datetime.utcfromtimestamp(0)
         ms = int(measure.getprediction().timestamp() * 1000)
         print(ms)
