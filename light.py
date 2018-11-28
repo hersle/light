@@ -14,9 +14,10 @@ import mail
 from email.mime.text import MIMEText
 
 if __name__ == "__main__":
+    machinename = os.popen("uname -a").read().split()[1]
     logfilename = "log"
     logminlevel = logging.DEBUG
-    logformat = "%(asctime)s: (%(levelname)s) %(message)s"
+    logformat = "%(asctime)s @ " + machinename + ": (%(levelname)s) %(message)s"
     logging.basicConfig(filename=logfilename, level=logminlevel, format=logformat)
 
     args = ["", "", ""]
