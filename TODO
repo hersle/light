@@ -4,5 +4,4 @@ party mode?
 store subscription codes
 send unsubscription link in individual emails with code
 prevent same email from subscribing multiple times
-why is server time query inconsistent when calling from client and on the server?
 exclude selected measurements from regression and mark red, but do not delete them
