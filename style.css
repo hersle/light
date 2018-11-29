@@ -91,3 +91,17 @@ h2 {
 	margin-right: auto;
 	margin-bottom: 1em;
 }
+#header {
+	font-family: "Open Sans";
+	font-size: 70px;
+	text-align: center;
+	margin: 0 auto;
+	line-height: 1em;
+	text-decoration: none;
+}
+@font-face {
+	font-family: "Open Sans";
+	font-style: normal;
+	font-weight: 700;
+	src: local("Open Sans Bold"), local("OpenSans-Bold"), url("https://fonts.gstatic.com/s/opensans/v15/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2") format("woff2");
+}
