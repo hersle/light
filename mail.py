@@ -14,6 +14,7 @@ from email.mime.text import MIMEText
 
 def mail(recipient, subject, text):
     msg = MIMEText(text, "html")
+    msg["From"] = "kontakt@campusservice.ntnu.no"
     msg["To"] = recipient
     msg["Subject"] = subject
     try:
