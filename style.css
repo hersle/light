@@ -92,12 +92,13 @@ h2 {
 	margin-bottom: 1em;
 }
 #header {
+	max-width: 600px;
+	font-size: 60px;
+	overflow: hidden;
 	font-family: "Open Sans";
-	font-size: 70px;
 	text-align: center;
 	margin: 0 auto;
 	line-height: 1em;
-	text-decoration: none;
 }
 @font-face {
 	font-family: "Open Sans";
