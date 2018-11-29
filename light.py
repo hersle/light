@@ -76,7 +76,7 @@ if __name__ == "__main__":
             exit()
 
         random.seed(time.time())
-        code = createconfirmationcode()
+        code = mail.createconfirmationcode()
         file = open("subscribers_unconfirmed", "r")
         lines = file.readlines()
         line = code + " " + email + "\n"
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         text = ""
         text += "\"" + email + "\" har anmodet om å motta varsler hver gang lysslukking på Fysikkland måles.\n"
         text += "For å bekrefte abonnementet, klikk <a href=\"" + link + "\">her</a>.\n"
-        mail([email], subject, text)
+        mail.mail(email, subject, text)
         print("En bekreftelsesepost er sendt til " + email + ".")
         logging.info("received subscription request from %s", email)
     elif args[0] == "confirm":

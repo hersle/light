@@ -9,40 +9,21 @@ import time
 import random
 import string
 import logging
+import subprocess
 from email.mime.text import MIMEText
 
-def mail(recipients, subject, text):
-    fromaddr = "fysikklandlyset@mail.com"
-    password = "Fysikkland123"
-    smtpaddr = "smtp.mail.com"
-    port = 587
-
-    server = smtplib.SMTP()
-    server.connect(smtpaddr, port)
-    server.login(fromaddr, password)
-
+def mail(recipient, subject, text):
     msg = MIMEText(text, "html")
-    msg["From"] = fromaddr
-    msg["To"] = ", ".join(recipients)
+    msg["To"] = recipient
     msg["Subject"] = subject
-
     try:
-        server.send_message(msg)
-        logging.info("successfully sent email \"%s...\" to %s", subject[:7], [",".join([(email.split("@")[0][:3] + "...@" + email.split("@")[1]) for email in recipients])])
+        subprocess.run(["/usr/sbin/sendmail", "-t", "-oi"], input=msg.as_bytes(), check=True)
+        logging.info("mailed \"%s...\" to %s", subject[:7], (recipient.split("@")[0][:3] + "...@" + recipient.split("@")[1]))
     except Exception as e:
-        logging.error("could not send email \"%s...\" to %s: %s", subject[:7], [",".join([(email.split("@")[0][:3] + "...@" + email.split("@")[1]) for email in recipients])], e)
-        exit()
-
-    server.quit()
+        logging.error("could not \"%s...\" to %s", subject[:7], (recipient.split("@")[0][:3] + "...@" + recipient.split("@")[1]))
+        logging.error(str(e))
 
 def notify():
-    recipients = []
-    file = open("subscribers", "r")
-    for line in file:
-        email = line.strip()
-        recipients.append(email)
-    file.close()
-
     subject = "Noen målte nettopp lyset på Fysikkland!"
 
     text = ""
@@ -62,7 +43,12 @@ def notify():
     text += "--- SLUTT LYSLOGG SIKKERHETSKOPI ---\n"
     text = text.replace("\n", "<br>")
 
-    mail(recipients, subject, text)
+    recipients = []
+    file = open("subscribers", "r")
+    for line in file:
+        email = line.strip()
+        mail(email, subject, text)
+    file.close()
 
 def createconfirmationcode():
     # random string
