@@ -1,7 +1,4 @@
 minimize network requests
 in period in which registration is open: check often for whether someone else registers it, and update clients, so they are notified when someone else registers?
-party mode?
-store subscription codes
 send unsubscription link in individual emails with code
-prevent same email from subscribing multiple times
 exclude selected measurements from regression and mark red, but do not delete them

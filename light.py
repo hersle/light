@@ -75,6 +75,16 @@ if __name__ == "__main__":
             logging.info("denied subscription from %s due to format error", email)
             exit()
 
+        file = open("subscribers", "r")
+        lines = file.readlines()
+        file.close()
+        for line in lines:
+            words = line.split()
+            if email == words[1]:
+                print("Epostadressen er allerede registrert.")
+                logging.info("denied second subscription request from %s", email)
+                exit()
+
         random.seed(time.time())
         code = mail.createconfirmationcode()
         file = open("subscribers_unconfirmed", "r")
