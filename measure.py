@@ -1,63 +1,61 @@
 #!/usr/bin/python3
 
-import sys
-import re
 import datetime
-import smtplib
-import time
-import random
-import string
-from email.mime.text import MIMEText
 
-def linregr(x, y):
-        assert len(x) == len(y), "different number of x and y values"
-        n = len(x)
-        sx, sy = sum(x), sum(y)
-        sxx, sxy, syy = sum(x**2 for x in x), sum(x * y for x, y in zip(x, y)), sum(y**2 for y in y)
-        delta  = n * sxx - sx**2
-        a = (n * sxy - sx * sy) / delta
-        b = (sy * sxx - sx * sxy) / delta
-        dy = [y - (a * x + b) for x, y in zip(x, y)]
-        s = sum(dy**2 for dy in dy)
-        da = (n * s / ((n - 2) * delta))**(1/2)
-        db = (s * sxx / ((n - 2) * delta))**(1/2)
-        # return a, b, da, db
-        return a, b
-
-def registered(time):
+def read_times():
+    times = []
     file = open("light.dat", "r")
-    today = time.date()
-    reg = False
-    for line in file:
-        date = datetime.datetime.strptime(line, "%d.%m.%y %H:%M:%S\n").date()
-        if (date - today).days == 0:
-            reg = True
-            break
-    file.close()
-    return reg
-
-def getprediction():
-    # print prediction for today
-    epoch = datetime.datetime.utcfromtimestamp(0)
-    file = open("light.dat", "r")
-    x = []
-    y = []
     for line in file:
         time = datetime.datetime.strptime(line, "%d.%m.%y %H:%M:%S\n")
+        times.append(time)
+    file.close()
+    return times
+
+def add_time(time):
+    line = time.strftime("%d.%m.%y %H:%M:%S\n")
+    file = open("light.dat", "a")
+    file.write(line)
+    file.close()
+
+def linear_regression(x, y):
+    assert len(x) == len(y), "different number of x and y values"
+    n = len(x)
+    sx, sy, sxx, sxy, syy = 0, 0, 0, 0, 0
+    for i in range(0, n):
+        sx += x[i]
+        sy += y[i]
+        sxx += x[i] * x[i]
+        sxy += x[i] * y[i]
+        syy += y[i] * y[i]
+    a = (n * sxy - sx * sy) / (n * sxx - sx**2)
+    b = (sy * sxx - sx * sxy) / (n * sxx - sx**2)
+    return a, b
+
+def time_is_available(time):
+    date = time.date()
+    for time in read_times():
+        if (time.date() - date).days == 0:
+            return False
+    return True
+
+def get_prediction():
+    epoch = datetime.datetime.utcfromtimestamp(0)
+    x = []
+    y = []
+    for time in read_times():
         days = (time - epoch).days
         secs = (time - epoch).total_seconds()
         x.append(days)
         y.append(secs)
-    file.close()
 
-    a, b = linregr(x, y)
+    a, b = linear_regression(x, y)
 
-    time = datetime.datetime.today()
-    days = (time - epoch).days
+    today = datetime.datetime.today()
+    days = (today - epoch).days
     secs = a * days + b
-    time = datetime.datetime.utcfromtimestamp(secs)
-    return time
+    time_prediction = datetime.datetime.utcfromtimestamp(secs)
+    return time_prediction
 
-def timeisreasonable(time):
-    prediction = getprediction()
+def time_is_reasonable(time):
+    prediction = get_prediction()
     return abs((time - prediction).total_seconds()) <= 30
