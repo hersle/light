@@ -4,6 +4,10 @@ body {
 	margin: 0px auto;
 	padding: 10px;
 }
+p {
+	text-align: justify;
+	text-justify: inter-word;
+}
 table {
 	border-collapse: collapse;
 }
