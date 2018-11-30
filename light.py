@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
         if ok:
             file = open("subscribers", "a")
-            line = email + "\n"
+            line = code + " " + email + "\n"
             file.write(line)
             file.close()
             print(email + " bekreftet.")
@@ -138,8 +138,10 @@ if __name__ == "__main__":
 
         found = False
         file = open("subscribers", "w")
+        # TODO: could potentially delete all subscribers upon error
         for line in lines:
-            if line.strip() == email:
+            words = line.split()
+            if words[1] == email:
                 found = True
             else:
                 file.write(line)

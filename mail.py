@@ -47,7 +47,8 @@ def notify():
     recipients = []
     file = open("subscribers", "r")
     for line in file:
-        email = line.strip()
+        words = line.split()
+        email = words[1]
         mail(email, subject, text)
     file.close()
 
