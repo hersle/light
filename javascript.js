@@ -181,13 +181,17 @@ function updateTable() {
 			let cell4 = row.insertCell();
 			cell1.innerHTML = dateString(time, "DD.MM.YY");
 			cell2.innerHTML = dateString(time, "hh:mm:ss");
-			let offset = ((msecs - msecs_pred) / 1000).toFixed(2);
+			let offset = ((msecs - msecs_pred) / 1000).toFixed(1);
 			let sign = offset > 0 ? "+" : "−";
 			offset = Math.abs(offset);
 			if (!isNaN(offset)) {
 				cell3.innerHTML = dateString(time_pred, "hh:mm:ss.sss");
 				cell4.innerHTML = sign + offset + " s";
-				if (offset > 5) {
+				if (offset >= 20) {
+					cell4.style.backgroundColor = "red";
+				} else if (offset >= 10) {
+					cell4.style.backgroundColor = "orange";
+				} else if (offset >= 5) {
 					cell4.style.backgroundColor = "yellow";
 				}
 			}

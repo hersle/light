@@ -10,6 +10,7 @@
 
 <body>
 
+<div class="card">
 <a href="https://folk.ntnu.no/hermasl/light" style="text-decoration: none;">
 <div id="header">
 	<!--<img id="banner" src="logo.svg">-->
@@ -20,19 +21,16 @@
 
 <div id="response"></div>
 
-<p>Lyset på Fysikkland slukker automatisk hver dag, omtrent 0.75 sekunder tidligere enn dagen før. Lysloggen er et tiltak for å monitorere dette merkelige mønsteret.</p>
+<p>Lyset på Fysikkland slukker automatisk hver dag, omtrent 0.75 sekunder tidligere enn dagen før. Lysloggen er et tiltak for å monitorere utviklingen i dette mønsteret. Alle som befinner seg på Fysikkland på slukketidspunktet oppfordres til å bidra til monitoreringen gjennom å registrere tidspunktet lyset slukker ved bruk av denne tjenesten.</p>
+</div>
 
-<div class="announcement">
+<div class="announcement card">
 <strong>Tidsfeil rettet</strong><br>
 Den kritiske feilen hos NTNU som forårsaket tidsavvik på opptil 10 sekunder er nå rettet.
-Fysikkland holder NTNU ansvarlige for feilen og beklager samtidig alle ulemper feilen har medført.
+Fysikkland holder NTNU ansvarlige for feilen og beklager samtidig alle ulemper den har medført.
 </div>
 
-<div id="streak" style="text-align: center; font-size: 1.5em; line-height: 2em;">
-Antall påfølgende målinger:
-<img src="streak.png" style="height: 1em;">
-<span id="streakcount">0</span>
-</div>
+<div class="card">
 
 <table>
 	<tr>
@@ -47,12 +45,19 @@ Antall påfølgende målinger:
 		<th>Estimert slukketid</th>
 		<td id="prediction"></td>
 	</tr>
+	<tr>
+		<th>Påfølgende målinger</th>
+		<td>
+			<img src="streak.png" style="height: 1em;">
+			<span id="streakcount">0</span> dager
+		</td>
+	</tr>
 </table>
 
 <form>
 <button id="updatebutton" type="button">
 <span id="updatebuttonmaintext">Registrér slukking</span><br>
-<span id="updatebuttonsubtext"></span>
+<span id="updatebuttonsubtext">--:--:--.---</span>
 </button>
 </form>
 
@@ -69,17 +74,26 @@ Antall påfølgende målinger:
 </tr>
 </tbody>
 </table>
+</div>
 
+<div class="card">
 <h2>Varsling</h2>
-
-Registrér deg her for å motta varsler hver gang lyset på Fysikkland måles!
+<p>
+Fysikkland tilbyr epostvarsling ved måling av lysslukking for alle interesserte. Abonnér på vår eposttjeneste her!
+</p>
 <form id="subscribeform" onsubmit="return false">
 <label for="email">Epost</label>
 <input id="emailinput" name="email" type="text"/>
 <button id="subscribebutton" type="button">Abonner</button>
 </form>
+</div>
 
+<div class="card">
 <h2>Hypotetisk forklaring</h2>
+
+<p>
+Under presenteres en potensiell forklaring på det ufysikalske mønsteret i tidspunktet der lyset slukker. Forklaringen er hentet fra Fysikklands rapport fra vårsemesteret 2018.
+</p>
 
 <p>
 Vi antar at det automatiske lysslukkesystemet er designet av rasjonelle agenter som opprinnelig
@@ -105,12 +119,13 @@ magnetiske dipoler i et diamagnetisk materiale som svekker det totale magnetfelt
 Resultatet blir at signalet fra slukkeserveren, som programvaren sender ut til nøyaktig samme tidspunkt hver dag, når frem til lysene tidligere enn det programvaren antar jo mer røykemannen har røyket,
 slik at lyset slukkes tidligere.
 </p>
+</div>
 
 
 </body>
 
 
-<div class="announcement" style="text-align: center;">
+<div class="announcement card" style="text-align: center;">
 Utviklet av <a href="mailto:hermansletmoen@gmail.com">Herman Sletmoen</a>. Kildekode på <a href="https://github.com/hersle/light">GitHub</a>.
 </div>
 </html>
