@@ -67,7 +67,7 @@ if __name__ == "__main__":
             logging.info("denied subscription from %s due to format error", email)
             exit()
 
-        if False and mail.is_subscribed(email):
+        if mail.is_subscribed(email):
             print("Epostadressen er allerede registrert.")
             logging.info("denied second subscription request from %s", email)
             exit()
