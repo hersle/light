@@ -181,10 +181,11 @@ function updateTable() {
 			let cell4 = row.insertCell();
 			cell1.innerHTML = dateString(time, "DD.MM.YY");
 			cell2.innerHTML = dateString(time, "hh:mm:ss");
-			let offset = ((msecs - msecs_pred) / 1000).toFixed(1);
+			let offset = ((msecs - msecs_pred) / 1000);
 			let sign = offset > 0 ? "+" : "−";
 			offset = Math.abs(offset);
 			if (!isNaN(offset)) {
+				offset = offset.toFixed(1);
 				cell3.innerHTML = dateString(time_pred, "hh:mm:ss.sss");
 				cell4.innerHTML = sign + offset + " s";
 				if (offset >= 20) {
