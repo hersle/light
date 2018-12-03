@@ -8,7 +8,7 @@ body {
 	margin: 0.5em;
 	padding: 1.0em;
 	background-color: #ffffff;
-	box-shadow: 0px 0px 10px 0px gray;
+	box-shadow: 0px 0px 5px grey;
 }
 .card > :first-child {
 	margin-top: 0;
