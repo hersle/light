@@ -27,6 +27,9 @@ p {
 	padding: 2.0em;;
 	margin-bottom: 10px;
 }
+#updatebutton:hover {
+	box-shadow: 0 0 5px black inset;
+}
 #updatebuttonmaintext {
 	font-weight: bold;
 	font-size: 2.5em;
