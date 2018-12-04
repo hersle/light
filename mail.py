@@ -81,16 +81,6 @@ def add_subscriber(email):
     print("En bekreftelsesepost er sendt til " + email + ".")
     logging.info("received subscription request from %s", email)
 
-def remove_subscriber(email):
-    subscribers = read_subscribers()
-    for i, subscriber in enumerate(subscribers):
-        if email == subscriber[1]:
-            subscribers.pop(i)
-            write_subscribers(subscribers)
-            logging.info("removed subscriber %s", email)
-            return
-    logging.info("could not remove subscriber %s", email)
-
 def confirm_subscription(code, email):
     subscribers_unconfirmed = read_subscribers(confirmed=False)
 
@@ -109,6 +99,21 @@ def confirm_subscription(code, email):
 
     print(email + " ikke bekreftet.")
     logging.info("failed to confirm subscription from %s", email)
+
+def confirm_unsubscription(code, email):
+    subscribers = read_subscribers()
+
+    for i, subscriber in enumerate(subscribers):
+        if email == subscriber[1] and code == subscriber[0]:
+            subscribers.pop(i)
+            write_subscribers(subscribers)
+
+            print("Avsluttet abonnement for %s." % email)
+            logging.info("unsubscribed %s", email)
+            return
+
+    print("Kunne ikke avslutte abonnement for %s." % email)
+    logging.info("failed to unsubscribe from %s", email)
 
 def notify():
     subject = "Noen målte nettopp lyset på Fysikkland!"
