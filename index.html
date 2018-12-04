@@ -19,8 +19,6 @@
 </div>
 </a>
 
-<div id="response"></div>
-
 <p>Lyset på Fysikkland slukker automatisk hver dag, omtrent 0.75 sekunder tidligere enn dagen før. Lysloggen er et tiltak for å monitorere utviklingen i dette mønsteret.</p>
 <p>Alle som befinner seg på Fysikkland på slukketidspunktet oppfordres til å bidra til monitoreringen gjennom å registrere tidspunktet lyset slukker ved bruk av denne tjenesten.</p>
 </div>
@@ -49,6 +47,8 @@
 	</tr>
 </table>
 
+<div id="registerresponse" class="response"></div>
+
 <form>
 <button id="updatebutton" type="button">
 <span id="updatebuttonmaintext">Registrér slukking</span><br>
@@ -76,6 +76,7 @@
 <p>
 Fysikkland tilbyr epostvarsling ved måling av lysslukking for alle interesserte. Abonnér på vår eposttjeneste her!
 </p>
+<div id="subscriberesponse" class="response"></div>
 <form id="subscribeform" onsubmit="return false">
 <label for="email">Epost</label>
 <input id="emailinput" name="email" type="text"/>
