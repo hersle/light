@@ -78,29 +78,8 @@ if __name__ == "__main__":
         code = args[2]
         mail.confirm_subscription(code, email)
     elif args[0] == "unsubscribe":
-        print("Stengt.")
-        exit()
-
         email = args[1]
-
-        file = open("subscribers", "r")
-        lines = file.readlines()
-        file.close()
-
-        found = False
-        file = open("subscribers", "w")
-        # TODO: could potentially delete all subscribers upon error
-        for line in lines:
-            words = line.split()
-            if words[1] == email:
-                found = True
-            else:
-                file.write(line)
-        file.close()
-
-        if found:
-            print("Abonnementet til " + email + " er avsluttet.")
-        else:
-            print("Fant ikke " + email + ".")
+        code = args[2]
+        mail.confirm_unsubscription(code, email)
     else:
         print("Ukjent kommando.")

@@ -118,24 +118,32 @@ def confirm_unsubscription(code, email):
 def notify():
     subject = "Noen målte nettopp lyset på Fysikkland!"
 
-    text = ""
-    text += "Navigér til <a href=\"http://folk.ntnu.no/hermasl/light\">folk.ntnu.no/hermasl/light</a> for å se målingen!\n"
-    text += "\n"
-    text += "Som medlem av Fysikklandlysets epostliste bidrar du til sikker arkivering av lysloggen gjennom et distribuert blockchain-inspirert sikkerhetskopieringssystem.\n"
-    text += "Du vil derfor finne en kopi av lysloggen under.\n"
-    text += "Fysikkland anmoder deg om å ta godt vare på kopien i tilfelle noe ufysikalsk inntreffer og den sentrale loggen tilintetgjøres helt eller delvis.\n"
-    text += "\n"
-    text += "Fysikkland ønsker deg en fin dag videre.\n"
-    text += "\n"
-    text += "--- START LYSLOGG SIKKERHETSKOPI ---\n"
+    text_common = ""
+    text_common += "Navigér til <a href=\"http://folk.ntnu.no/hermasl/light\">folk.ntnu.no/hermasl/light</a> for å se målingen!\n"
+    text_common += "\n"
+    text_common += "Som medlem av Fysikklandlysets epostliste bidrar du til sikker arkivering av lysloggen gjennom et distribuert blockchain-inspirert sikkerhetskopieringssystem.\n"
+    text_common += "Du vil derfor finne en kopi av lysloggen under.\n"
+    text_common += "Fysikkland anmoder deg om å ta godt vare på kopien i tilfelle noe ufysikalsk inntreffer og den sentrale loggen tilintetgjøres helt eller delvis.\n"
+    text_common += "\n"
+    text_common += "Fysikkland ønsker deg en fin dag videre.\n"
+    text_common += "\n"
+    text_common += "--- START LYSLOGG SIKKERHETSKOPI ---\n"
     file = open("light.dat", "r")
     for line in file:
-        text += line
+        text_common += line
     file.close()
-    text += "--- SLUTT LYSLOGG SIKKERHETSKOPI ---\n"
-    text = text.replace("\n", "<br>")
+    text_common += "--- SLUTT LYSLOGG SIKKERHETSKOPI ---\n"
 
-    for recipient in read_subscribers_email():
+    for subscriber in read_subscribers():
+        code = subscriber[0]
+        recipient = subscriber[1]
+        link = "http://folk.ntnu.no/hermasl/light/unsubscribe.php"
+        link += "?email=" + recipient + "&code=" + code
+        text_unique = "Dersom du ikke lenger ønsker å varsles når lysslukkingen på Fysikkland registreres, kan du avslutte ditt abonnement <a href=\"%s\">her</a>." % link
+
+        text = text_common + "\n" + text_unique
+        text = text.replace("\n", "<br>")
+
         mail(recipient, subject, text)
 
 def create_confirmation_code():
