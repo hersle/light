@@ -71,7 +71,14 @@ function updateTimer() {
 
 	let sign = stime < prediction ? "−" : "+";
 	let text = sign + dateString(diff, "hh:mm:ss.sss");
-	let color = Math.abs(msecs / 1000) > registrationHalfInterval ? "red" : "green";
+	let color = "";
+	if (registered) {
+		color = "grey";
+	} else if (Math.abs(msecs / 1000) > registrationHalfInterval) {
+		color = "red";
+	} else {
+		color = "green";
+	}
 	document.getElementById("updatebuttonsubtext").innerHTML = text;
 	document.getElementById("updatebutton").style.backgroundColor = color;
 }
