@@ -3,4 +3,5 @@ light_ms.dat
 subscribers
 subscribers_unconfirmed
 log
+.htpasswd
 *.swp

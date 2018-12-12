@@ -10,4 +10,8 @@ Deny from all
 
 <Files "log">
 Header set Content-Type "text/plain; charset=utf-8"
+AuthType Basic
+AuthName "Loggen er passordbeskyttet."
+AuthUserFile /web/folk/hermasl/light/.htpasswd
+Require valid-user
 </Files>
