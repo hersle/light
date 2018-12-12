@@ -33,14 +33,14 @@ if __name__ == "__main__":
         # add new time
         now = datetime.datetime.now()
         if not measure.time_is_available(now):
-            print("Lys allerede registrert.")
+            print("Slukking allerede registrert.")
             logging.info("denied registration due to earlier registration today")
         elif not measure.time_is_reasonable(now):
             print("Ufysikalsk tid. For stort avvik.")
             logging.info("denied registration due to large deviation from prediction")
         else:
             measure.add_time(now)
-            print("Registrert.")
+            print("Slukking registrert.")
             logging.info("successfully registered")
     elif args[0] == "open":
         now = datetime.datetime.now()

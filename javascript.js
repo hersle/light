@@ -124,12 +124,21 @@ function register() {
 	req.open("POST", "post.php");
 	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	req.addEventListener("load", function() {
-		if (req.readyState == 4 && req.response === "Registrert.") {
-			location.reload();
+		let success = req.response === "Slukking registrert.";
+		let color = "";
+		if (success) {
+			color = "green";
 		} else {
-			document.getElementById("registerresponse").innerHTML = req.response;
-			document.getElementById("registerresponse").style.display = "block";
-			//window.location.hash = "registerresponse"
+			color = "red";
+		}
+		document.getElementById("registerresponse").innerHTML = req.response;
+		document.getElementById("registerresponse").style.display = "block";
+		document.getElementById("registerresponse").style.color = color;
+		document.getElementById("registerresponse").style.borderColor = color;
+		if (success) {
+			updateTable();
+			updateStatus();
+			updatePrediction();
 		}
 	});
 	req.send();
