@@ -10,7 +10,7 @@ import email.mime.text
 
 def mail(recipient, subject, text):
     msg = email.mime.text.MIMEText(text, "html")
-    msg["From"] = "kontakt@campusservice.ntnu.no"
+    msg["From"] = "noreply@campusservice.ntnu.no"
     msg["To"] = recipient
     msg["Subject"] = subject
 
