@@ -72,10 +72,8 @@ function updateTimer() {
 	let sign = stime < prediction ? "−" : "+";
 	let text = sign + dateString(diff, "hh:mm:ss.sss");
 	let color = "";
-	if (registered) {
+	if (registered || Math.abs(msecs / 1000) > registrationHalfInterval) {
 		color = "grey";
-	} else if (Math.abs(msecs / 1000) > registrationHalfInterval) {
-		color = "red";
 	} else {
 		color = "green";
 	}
