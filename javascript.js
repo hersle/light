@@ -237,7 +237,13 @@ function updateTable() {
 
 			currdate = prevdate;
 		}
-		document.getElementById("streakcount").innerHTML = streak;
+		let text = "";
+		if (streak == 1) {
+			text = streak + " dag";
+		} else {
+			text = streak + " dager";
+		}
+		document.getElementById("streakcount").innerHTML = text;
 	});
 	req.send();
 }
