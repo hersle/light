@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
 import datetime
+import os
+from dotenv import load_dotenv
 
 def read_times():
     times = []
@@ -58,4 +60,10 @@ def get_prediction():
 
 def time_is_reasonable(time):
     prediction = get_prediction()
-    return abs((time - prediction).total_seconds()) <= 30
+    load_dotenv()
+    prediction += datetime.timedelta(
+        seconds=os.getenv('CORRECTION_SECONDS', 0)  # Correction to the regression
+    )
+    return abs((time - prediction).total_seconds()) <= os.getenv(
+        "ACCEPTABLE_INTERVAL", 30
+    )
