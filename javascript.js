@@ -1,4 +1,4 @@
-const registrationHalfInterval = 30;
+let registrationHalfInterval = 30;
 const timerUpdateInterval = 101;
 
 var offset = 0;
@@ -97,8 +97,10 @@ function updatePrediction() {
 	let req = new XMLHttpRequest();
 	req.open("GET", "predict.php");
 	req.addEventListener("load", function() {
-		let secs = parseInt(req.response);
-		prediction = new Date(secs);
+        let data = JSON.parse(req.response);
+	    console.log(data);  // Leave for debug purposes
+		prediction = new Date(data.ms + data.correction * 1000);
+        registrationHalfInterval = data.interval;
 		document.getElementById("prediction").innerHTML = dateString(prediction, "hh:mm:ss.sss");
 	});
 	req.send();
