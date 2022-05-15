@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import datetime
+import settings
 
 def read_times():
     times = []
@@ -58,4 +59,9 @@ def get_prediction():
 
 def time_is_reasonable(time):
     prediction = get_prediction()
-    return abs((time - prediction).total_seconds()) <= 30
+    prediction += datetime.timedelta(
+        seconds=getattr(settings, 'CORRECTION_SECONDS', 0)  # Correction to the regression
+    )
+    return abs((time - prediction).total_seconds()) <= int(getattr(
+        settings, "ACCEPTABLE_INTERVAL", 30
+    ))
