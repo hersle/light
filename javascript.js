@@ -5,6 +5,11 @@ var offset = 0;
 var prediction;
 var registered = false;
 
+const MILLISECOND = 1;
+const SECOND = 1000 * MILLISECOND;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+
 // Returns the given date represented with a UTC timezone
 function dateUTC(date) {
 	return new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
@@ -12,6 +17,13 @@ function dateUTC(date) {
 
 function dateUTCLocal(date) {
 	return new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+}
+
+function msAfterMidnight(date) {
+	return (date.getHours() * 60 * 60 * 1000
+	      + date.getMinutes() * 60 * 1000
+	      + date.getSeconds() * 1000
+	      + date.getMilliseconds());
 }
 
 function stripDateTimeUTC(date) {
@@ -166,12 +178,22 @@ function updateTable() {
 
 		let sx = 0, sy = 0, sxx = 0, sxy = 0, syy = 0;
 
+		let plot_data = {
+			series: [
+				{name: "predictions",  data: [] },
+				{name: "measurements", data: [] },
+			]
+		};
+
 		let meas_pred_list = req.response.split("\n");
 		let n = meas_pred_list.length - 1;
 		for (let i = 0; i < n; i++) { // skip last empty line
 			let meas_pred = meas_pred_list[i].split(" ");
 			let meas = dateUTC(new Date(parseInt(meas_pred[0])));
 			let pred = new Date(parseInt(meas_pred[1]));
+
+			plot_data.series[1].data.push({x: meas, y: msAfterMidnight(meas)});
+			plot_data.series[0].data.push({x: meas, y: msAfterMidnight(pred)});
 
 			if (n - i <= 5) {
 				var row = tabletop.insertRow(1);
@@ -201,6 +223,43 @@ function updateTable() {
 				}
 			}
 		}
+
+		let xticks = [];
+		for (let year = 2018; year <= (new Date()).getFullYear()+1; year++) {
+			xticks.push((new Date(year, 1, 1, 0, 0, 0)).getTime());
+		}
+
+		let yticks = [];
+		for (let min = 40; min <= 65; min += 5) {
+			yticks.push(19*HOUR+min*MINUTE);
+		}
+
+		let plot_options = {
+			chartPadding: {"right": 30},
+			axisX: {
+				type: Chartist.FixedScaleAxis,
+				low: xticks[0],
+				high: xticks[xticks.length-1],
+				ticks: xticks,
+				labelInterpolationFnc: function(ms) {
+					return dateString(new Date(ms), "YYYY");
+				}
+			}, axisY: {
+				type: Chartist.FixedScaleAxis,
+				low: yticks[0],
+				high: yticks[yticks.length-1],
+				ticks: yticks,
+				labelInterpolationFnc: function(ms) {
+					return dateString(dateUTC(new Date(ms)), "hh:mm");
+				},
+			},
+			lineSmooth: false,
+			series: {
+				"measurements": {showLine: false, showPoint: true},
+				"predictions":  {showLine: true, showPoint: false},
+			}
+		};
+		new Chartist.Line(".ct-chart", plot_data, plot_options);
 
 		// determine streak by counting backwards
 		let currdate = dateUTCLocal(new Date());
