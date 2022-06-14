@@ -7,8 +7,6 @@ import time
 import measure
 import logging
 import mail
-import settings
-import json
 
 def initialize_log():
     name = os.uname().nodename
@@ -30,13 +28,7 @@ if __name__ == "__main__":
 
     if args[0] == "predict":
         ms = int(measure.get_prediction().timestamp() * 1000)
-        correction = getattr(
-            settings, "CORRECTION_SECONDS", 0
-        )  # Correction to the regression
-        interval = getattr(settings, "ACCEPTABLE_INTERVAL", 30)
-        print(
-            json.dumps({"ms": ms, "correction": correction, "interval": interval})
-        )
+        print(ms)
     elif args[0] == "add":
         # add new time
         now = datetime.datetime.now()
