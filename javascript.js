@@ -211,7 +211,7 @@ function updateTable() {
 			let sign = offset > 0 ? "+" : "−";
 			offset = Math.abs(offset);
 			if (!isNaN(offset)) {
-				offset = offset.toFixed(1);
+				offset = offset.toFixed(0);
 				cell3.innerHTML = dateString(pred, "hh:mm:ss.sss");
 				cell4.innerHTML = sign + offset + " s";
 				if (offset >= 20) {
