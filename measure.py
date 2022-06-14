@@ -6,10 +6,23 @@ def read_times():
     times = []
     file = open("light.dat", "r")
     for line in file:
-        time = datetime.datetime.strptime(line, "%d.%m.%y %H:%M:%S\n")
-        times.append(time)
+        if not line.startswith("JUMP "):
+            time = datetime.datetime.strptime(line, "%d.%m.%y %H:%M:%S\n")
+            times.append(time)
     file.close()
     return times
+
+def read_jumps():
+    jumps = []
+    file = open("light.dat", "r")
+    for line in file:
+        if line.startswith("JUMP "):
+            _, date, jump = line.split(" ")
+            date = datetime.datetime.strptime(date, "%d.%m.%y")
+            jump = int(jump)
+            jumps.append((date, jump))
+    file.close()
+    return jumps
 
 def add_time(time):
     line = time.strftime("%d.%m.%y %H:%M:%S\n")
@@ -42,9 +55,15 @@ def get_prediction(date=datetime.datetime.today()):
     epoch = datetime.datetime.utcfromtimestamp(0)
     x = []
     y = []
+    jumps = read_jumps()
     for time in read_times():
         if time >= date:
             break
+        # subtract jumps from measurements,
+        # predicting as if all points lie on a straight line
+        for jumpdate, jumpms in jumps:
+            if time >= jumpdate and jumpdate <= date:
+                time = time - datetime.timedelta(milliseconds=jumpms) # predict as if one continuous straight line
         days = (time - epoch).days
         secs = (time - epoch).total_seconds()
         x.append(days)
@@ -58,6 +77,10 @@ def get_prediction(date=datetime.datetime.today()):
     today = datetime.datetime.today()
     days = (date - epoch).days
     secs = a * days + b
+    # add jumps to prediction
+    for jumpdate, jumpms in jumps:
+        if time >= jumpdate and jumpdate <= date:
+            secs = secs + jumpms / 1000 # sawtooth
     time_prediction = datetime.datetime.utcfromtimestamp(secs)
     return time_prediction
 
