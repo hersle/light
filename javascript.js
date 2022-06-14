@@ -166,22 +166,12 @@ function updateTable() {
 
 		let sx = 0, sy = 0, sxx = 0, sxy = 0, syy = 0;
 
-		let times = req.response.split("\n");
-		let n = times.length - 1;
+		let meas_pred_list = req.response.split("\n");
+		let n = meas_pred_list.length - 1;
 		for (let i = 0; i < n; i++) { // skip last empty line
-			let msecs = parseInt(times[i]);
-			let time = new Date(msecs);
-			time = dateUTC(time);
-
-			// predict based on previous measurements
-			let delta = i * sxx - sx * sx;
-			let a = (i * sxy - sx * sy) / delta;
-			let b = (sy * sxx - sx * sxy) / delta;
-
-			let days = Math.floor(msecs / (24 * 60 * 60 * 1000));
-			let msecs_pred = a * days + b;
-			let time_pred = new Date(msecs_pred);
-			time_pred = dateUTC(time_pred);
+			let meas_pred = meas_pred_list[i].split(" ");
+			let meas = dateUTC(new Date(parseInt(meas_pred[0])));
+			let pred = new Date(parseInt(meas_pred[1]));
 
 			if (n - i <= 5) {
 				var row = tabletop.insertRow(1);
@@ -193,14 +183,14 @@ function updateTable() {
 			let cell2 = row.insertCell();
 			let cell3 = row.insertCell();
 			let cell4 = row.insertCell();
-			cell1.innerHTML = dateString(time, "DD.MM.YY");
-			cell2.innerHTML = dateString(time, "hh:mm:ss");
-			let offset = ((msecs - msecs_pred) / 1000);
+			cell1.innerHTML = dateString(meas, "DD.MM.YY");
+			cell2.innerHTML = dateString(meas, "hh:mm:ss");
+			let offset = ((meas - pred) / 1000);
 			let sign = offset > 0 ? "+" : "−";
 			offset = Math.abs(offset);
 			if (!isNaN(offset)) {
 				offset = offset.toFixed(1);
-				cell3.innerHTML = dateString(time_pred, "hh:mm:ss.sss");
+				cell3.innerHTML = dateString(pred, "hh:mm:ss.sss");
 				cell4.innerHTML = sign + offset + " s";
 				if (offset >= 20) {
 					cell4.style.backgroundColor = "red";
@@ -210,20 +200,13 @@ function updateTable() {
 					cell4.style.backgroundColor = "yellow";
 				}
 			}
-
-			// for next
-			sx += days;
-			sy += msecs;
-			sxx += days * days;
-			sxy += days * msecs;
-			syy += msecs * msecs;
 		}
 
 		// determine streak by counting backwards
 		let currdate = dateUTCLocal(new Date());
 		let streak = 0;
 		for (let i = n - 1; i >= 0; i--) {
-			let msecs = parseInt(times[i]);
+			let msecs = parseInt(meas_pred_list[i].split(" ")[0]);
 			let prevdate = new Date(msecs);
 
 			let currdatedate = stripDateTimeUTC(currdate);

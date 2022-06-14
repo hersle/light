@@ -38,20 +38,25 @@ def time_is_available(time):
             return False
     return True
 
-def get_prediction():
+def get_prediction(date=datetime.datetime.today()):
     epoch = datetime.datetime.utcfromtimestamp(0)
     x = []
     y = []
     for time in read_times():
+        if time >= date:
+            break
         days = (time - epoch).days
         secs = (time - epoch).total_seconds()
         x.append(days)
         y.append(secs)
 
+    if len(x) < 2:
+        return None
+
     a, b = linear_regression(x, y)
 
     today = datetime.datetime.today()
-    days = (today - epoch).days
+    days = (date - epoch).days
     secs = a * days + b
     time_prediction = datetime.datetime.utcfromtimestamp(secs)
     return time_prediction

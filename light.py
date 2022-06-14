@@ -52,8 +52,12 @@ if __name__ == "__main__":
         epoch = datetime.datetime.utcfromtimestamp(0)
         times = measure.read_times()
         for time in times:
-            millis = int((time - epoch).total_seconds() * 1000)
-            print(millis)
+            print(int((time - epoch).total_seconds() * 1000), end=" ")
+            pred = measure.get_prediction(time)
+            if pred is None:
+                print("-")
+            else:
+                print(int(pred.timestamp() * 1000))
     elif args[0] == "time":
         ms = int(time.time() * 1000)
         print(ms)
