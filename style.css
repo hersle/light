@@ -35,6 +35,7 @@ p {
 	font-size: 2.5em;
 }
 #updatebuttonsubtext {
+	font-family: monospace;
 	font-size: 2em;
 }
 #errormessage {
