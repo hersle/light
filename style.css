@@ -123,6 +123,15 @@ table th, table td {
 	stroke: black !important;
 }
 .ct-point {
-	stroke-width: 5px !important;
+	stroke-width: 7px !important;
 	stroke: rgb(0, 80, 158) !important;
+}
+@keyframes blink {
+	50% {
+		opacity: 0.0;
+	}
+}
+line.ct-point:last-child {
+	stroke: red !important;
+	animation: blink 1.5s step-start 0s infinite;
 }

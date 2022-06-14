@@ -224,6 +224,11 @@ function updateTable() {
 			}
 		}
 
+		if (prediction != undefined) {
+			plot_data.series[0].data.push({x: prediction, y: msAfterMidnight(prediction)});
+			plot_data.series[1].data.push({x: prediction, y: msAfterMidnight(prediction)});
+		}
+
 		let xticks = [];
 		for (let year = 2018; year <= (new Date()).getFullYear()+1; year++) {
 			xticks.push((new Date(year, 1, 1, 0, 0, 0)).getTime());
