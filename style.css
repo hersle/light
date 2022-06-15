@@ -49,6 +49,13 @@ p {
 h1, h2 {
 	text-align: center;
 }
+ul { /* align bullets with text */
+	margin-left: 0;
+	padding-left: 0;
+}
+li { /* align bullets with text */
+	margin-left: 1em;
+}
 .announcement {
 	background-color: rgb(0, 80, 158); 
 	color: white; 
