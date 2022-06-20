@@ -7,6 +7,7 @@ import string
 import logging
 import subprocess
 import email.mime.text
+import os
 
 def mail(recipient, subject, text):
     msg = email.mime.text.MIMEText(text, "html")
@@ -79,7 +80,7 @@ def add_subscriber(email):
         subscribers = subscribers[len(subscribers)-1000:]
     write_subscribers(subscribers, confirmed=False)
 
-    link = "http://folk.ntnu.no/hermasl/light/confirm_subscription.php"
+    link = f"{get_site_root()}/confirm_subscription.php"
     link += "?email=" + email + "&code=" + code
 
     subject = "Bekreftelse av varsling ved måling av lysslukking"
@@ -128,7 +129,7 @@ def notify():
     subject = "Noen målte nettopp lyset på Fysikkland!"
 
     text_common = ""
-    text_common += "Navigér til <a href=\"http://folk.ntnu.no/hermasl/light\">folk.ntnu.no/hermasl/light</a> for å se målingen!\n"
+    text_common += f"Navigér til <a href=\"{get_site_root(prefix=True)}\">{get_site_root(prefix=False)}</a> for å se målingen!\n"
     text_common += "\n"
     text_common += "Som medlem av Fysikklandlysets epostliste bidrar du til sikker arkivering av lysloggen gjennom et distribuert blockchain-inspirert sikkerhetskopieringssystem.\n"
     text_common += "Du vil derfor finne en kopi av lysloggen under.\n"
@@ -146,7 +147,7 @@ def notify():
     for subscriber in read_subscribers():
         code = subscriber[0]
         recipient = subscriber[1]
-        link = "http://folk.ntnu.no/hermasl/light/unsubscribe.php"
+        link = f"{get_site_root()}/unsubscribe.php"
         link += "?email=" + recipient + "&code=" + code
         text_unique = "Dersom du ikke lenger ønsker å varsles når lysslukkingen på Fysikkland registreres, kan du avslutte ditt abonnement <a href=\"%s\">her</a>." % link
 
@@ -161,3 +162,13 @@ def create_confirmation_code():
     for i in range(0, 30):
         code += random.choice(string.ascii_lowercase)
     return code
+
+def get_ntnu_username():
+    cwd = os.getcwd() # e.g. /web/folk/hermasl/light
+    return cwd.split("/")[3] # e.g. hermasl
+
+def get_site_root(prefix=True):
+    if prefix:
+        return f"http://folk.ntnu.no/{get_ntnu_username()}/light" # e.g. https://folk.ntnu.no/hermasl/light
+    else:
+        return f"folk.ntnu.no/{get_ntnu_username()}/light" # e.g. folk.ntnu.no/hermasl/light
