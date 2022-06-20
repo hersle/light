@@ -40,13 +40,16 @@ def anonymize_email(email):
 def read_subscribers(confirmed=True):
     subscribers = []
     filename = "subscribers" if confirmed else "subscribers_unconfirmed"
-    file = open(filename, "r")
-    for line in file:
-        words = line.split()
-        code = words[0]
-        email = words[1]
-        subscribers.append((code, email))
-    file.close()
+    try:
+        file = open(filename, "r")
+        for line in file:
+            words = line.split()
+            code = words[0]
+            email = words[1]
+            subscribers.append((code, email))
+        file.close()
+    except IOError: # e.g. file doesn't exist
+        pass # subscribers remains an empty list
     return subscribers
 
 def read_subscribers_email(confirmed=True):
@@ -59,7 +62,7 @@ def read_subscribers_email(confirmed=True):
 
 def write_subscribers(subscribers, confirmed=True):
     filename = "subscribers" if confirmed else "subscribers_unconfirmed"
-    file = open(filename, "w")
+    file = open(filename, "w+")
     for subscriber in subscribers:
         code = subscriber[0]
         email = subscriber[1]
