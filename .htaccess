@@ -1,9 +1,4 @@
-<Files "subscribers">
-Order Allow,Deny
-Deny from all
-</Files>
-
-<Files "subscribers_unconfirmed">
+<Files "subscribers*">
 Order Allow,Deny
 Deny from all
 </Files>
