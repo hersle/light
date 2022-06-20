@@ -27,3 +27,16 @@ Det sekundære formålet er å gni inn skammen over å jobbe på Gløshaugen så
 7. Kopiér målinger fra en eksisterende lyslogg med for eksempel `wget http://folk.ntnu.no/hermasl/light/light.dat`.
 8. Kopiér abonnenter fra en eksisterende lyslogg med for eksempel `wget --user="" --password="PASSWORD" http://folk.ntnu.no/hermasl/light/subscribers` hvis du kjenner passordet `PASSWORD`.
 9. **Hvis du har gjort de siste skrittene, er lysloggen nå en eksakt kopi inkludert målinger og epost-abonnenter av den du har kopiert.**
+
+### Manuell endring av lysmålinger
+
+Lysmålingene er lagret i filen `light.dat`.
+For å gjøre manuelle endringer, åpne filen i en teksteditor med for eksempel `nano light.dat` og fjerne, legg til eller endre linjer med to forskjellige formater:
+* `DD.MM.YY HH:MM:SS` representerer en måling av lysslukkingstidspunktet.
+* `JUMP DD.MM.YY MS` forskyver alle estimater fra og med en gitt dato med et gitt antall millisekunder. Dette er nødvendig for å rekalibrere lysloggen etter at at lysslukkesystemet er nullstilt. Prøv deg fram med antall millisekunder til estimert slukketid blir som forventet.
+Hold filen sortert kronologisk etter dato.
+
+### Manuell endring av epost-abonnenter
+
+Epost-abonnentene er lagret i filen `subscribers`.
+De unike og tilfeldige tekststrengene assosiert med hver epostadresse er en kode som gjør at kun abonnenten som kjenner sin egen kode kan kansellere abonnementet (gjennom lenker i tilsendte eposter som inneholder den aktuelle koden).
