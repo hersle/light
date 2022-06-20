@@ -5,3 +5,4 @@ subscribers_unconfirmed
 log
 .htpasswd
 *.swp
+__pycache__/
