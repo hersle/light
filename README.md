@@ -34,7 +34,7 @@ Lysmålingene er lagret i filen `light.dat`.
 For å gjøre manuelle endringer, åpne filen i en teksteditor med for eksempel `nano light.dat` og fjerne, legg til eller endre linjer med to forskjellige formater:
 * `DD.MM.YY HH:MM:SS` representerer en måling av lysslukkingstidspunktet.
 * `JUMP DD.MM.YY MS` forskyver alle estimater fra og med en gitt dato med et gitt antall millisekunder. Dette er nødvendig for å rekalibrere lysloggen etter at at lysslukkesystemet er nullstilt. Prøv deg fram med antall millisekunder til estimert slukketid blir som forventet.
-Hold filen sortert kronologisk etter dato.
+Hold filen sortert kronologisk etter dato (notat til meg selv (´TODO´): det hadde vært mye bedre å kunne markere en måling med ! som `DD.MM.YY HH:MM:SS !` for å "insistere" på at den målingen er korrekt og dermed rekalibrere etter den målingen).
 
 ### Manuell endring av epost-abonnenter
 
