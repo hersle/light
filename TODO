@@ -1,5 +1,4 @@
 minimize network requests
 in period in which registration is open: check often for whether someone else registers it, and update clients, so they are notified when someone else registers?
-send unsubscription link in individual emails with code
 exclude selected measurements from regression and mark red, but do not delete them
 make functions with write side effects safer (removal of subscriptions)
