@@ -18,14 +18,23 @@ def mail(recipient, subject, text):
         cmd = ["/usr/sbin/sendmail", "-t", "-oi"]
         subprocess.run(cmd, input=msg.as_bytes(), check=True)
     except Exception as e:
-        logging.error("could not mail \"%s...\" to %s", subject, recipient)
+        logging.error("could not mail \"%s...\" to %s", subject, anonymize_email(recipient))
         logging.error(str(e))
         return
 
-    logging.info("mailed \"%s...\" to %s", subject[:7], recipient)
+    logging.info("mailed \"%s...\" to %s", subject[:7], anonymize_email(recipient))
 
 def is_valid_email(email):
     return re.fullmatch("[^@\s]+@[^@\s]+\.[^@\s]+", email) is not None
+
+def anonymize_email(email):
+    if not is_valid_email(email):
+        return "INVALIDEMAIL"
+    index_at = email.find("@")
+    if index_at >= 3:
+        return email[:3]        + "..." + email[index_at:] # e.g. abcdef@ntnu.no -> abc...@ntnu.no
+    else:
+        return email[:index_at] + "..." + email[index_at:] # e.g. ab@ntnu.no -> ab...@ntnu.no
 
 def read_subscribers(confirmed=True):
     subscribers = []
