@@ -1,6 +1,9 @@
 <Files "subscribers*">
-Order Allow,Deny
-Deny from all
+Header set Content-Type "text/plain; charset=utf-8"
+AuthType Basic
+AuthName "The Secret Password."
+AuthUserFile /web/folk/hermasl/light/.htpasswd
+Require valid-user
 </Files>
 
 <Files "log">
