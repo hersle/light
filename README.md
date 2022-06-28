@@ -21,7 +21,7 @@ Det sekundære formålet er å gni inn skammen over å jobbe på Gløshaugen så
 	* Hvis du bruker Linux, vet du sannsynligvis selv hva du skal gjøre.
 2. Logg inn på området ditt hos NTNUs Linux-webserver med `ssh DITT-NTNU-BRUKERNAVN@login.stud.ntnu.no` og NTNU-passordet ditt.
 3. Skriv `cd public_html/` for å gå inn i mappen som inneholder filer som offentliggjøres under [folk.ntnu.no/DITT-NTNU-BRUKERNAVN](http://folk.ntnu.no/DITT-NTNU-BRUKERNAVN).
-4. Skriv `https://github.com/hersle/light.git` for å laste ned kjernefunksjonaliteten til lysloggen fra dette GitHub-prosjektet.
+4. Skriv `git clone https://github.com/hersle/light.git` for å laste ned kjernefunksjonaliteten til lysloggen fra dette GitHub-prosjektet.
 5. Gå inn i mappen som nettopp ble lastet ned med `cd light/` og skriv deretter `ls -l` for å få oversikt over innholdet der.
 6. **En tom lyslogg (uten målinger og epost-abonnenter) skal nå være tilgjengelig på  [folk.ntnu.no/DITT-NTNU-BRUKERNAVN/light](http://folk.ntnu.no/DITT-NTNU-BRUKERNAVN/light).**
 7. Kopiér målinger fra en eksisterende lyslogg med for eksempel `wget http://folk.ntnu.no/hermasl/light/light.dat`.
