@@ -235,7 +235,7 @@ function updateTable() {
 		}
 
 		let yticks = [];
-		for (let min = 40; min <= 65; min += 5) {
+		for (let min = 30; min <= 65; min += 5) {
 			yticks.push(19*HOUR+min*MINUTE);
 		}
 

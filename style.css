@@ -128,7 +128,7 @@ table th, table td {
 /* (override) Chartist plot settings */
 .ct-chart {
 	width: 100%;
-	height: 300px;
+	height: 350px;
 }
 .ct-line {
 	stroke-width: 2px !important;
